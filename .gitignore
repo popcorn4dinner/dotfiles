@@ -1,0 +1,20 @@
+### SublimeText ###
+*.sublime-workspace
+*.sublime-project
+
+### Terraform ###
+.terraform
+*.tfstate*
+
+### Visual Studio Code ###
+.settings
+.vscode
+
+### Intellij ###
+.idea/
+*.ipr
+*.iws
+*.iml
+
+### OS X ###
+.DS_Store
