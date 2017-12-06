@@ -54,7 +54,7 @@ values."
      spell-checking
      syntax-checking
     (set-terminal-parameter nil 'background-mode 'dark)
-  (set-frame-parameter nil 'background-mode 'dark) 
+  (set-frame-parameter nil 'background-mode 'dark)
   (spacemacs/load-theme 'solarized) version-control
      html
      java
@@ -158,7 +158,7 @@ values."
                            :size 13
                            :weight normal
                            :width normal
-                           :powerline-scale 1.2)   
+                           :powerline-scale 1.2)
    ns-use-srgb-colorspace nil
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -351,6 +351,7 @@ you should place your code here."
            (helm-selection :foreground "white" :background "red" :inverse-video nil)
            ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.
            (cursor :background "#b58900")
+
          )))
 
   ;; Now we can load the theme.
@@ -362,6 +363,10 @@ you should place your code here."
   (set-face-attribute 'sp-show-pair-match-face nil :foreground 'unspecified :background 'unspecified)
   (set-face-attribute 'sp-show-pair-mismatch-face nil :foreground 'unspecified :background 'unspecified)
 
+  ;; Scrolling
+  (setq mouse-wheel-scroll-amount '(3 ((shift) . 1) ((control) . nil)))
+  (setq mouse-wheel-progressive-speed nil)
+ 
   ;; Run this once.
   (add-hook 'pd-focus-in-hook 'pd-log-sys-info)
   )
