@@ -16,5 +16,8 @@
 *.iws
 *.iml
 
+### Emacs ###
+*.#*
+
 ### OS X ###
 .DS_Store
