@@ -2,6 +2,7 @@
 
 ## Usage
 Clone this repository and execute
+
 ```sh
 
 echo "export USERNAME='your-user-name'" >> ~/.username
