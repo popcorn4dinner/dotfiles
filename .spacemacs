@@ -72,7 +72,7 @@ values."
      yaml
      )
    ;; List of additional packages C-S-cthat will be installed without being
-   ;; wrapped in a layer. If you need some configuration for these
+   ;; wrapped in a layer. If yC-S-cou need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(color-theme-solarized all-the-icons php-refactor-mode ac-inf-ruby company-inf-ruby multiple-cursors)
@@ -332,7 +332,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Sanity savers
   (setq create-lockfiles nil)
   (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
-  (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))) 
+  (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
   (setq auto-save-list-file-prefix temporary-file-directory)
 
 
@@ -352,8 +352,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/set-leader-keys "jg" 'dumb-jump-go)
   (spacemacs/set-leader-keys "jG" 'dumb-jump-go-other-window)
 
-  ;;;; YaSnippet expand
-  ;;(define-key yas-minor-mode-map (kbd "SPC") 'yas-maybe-expand)
+  ;;;; YaSnippet
+  (require 'yasnippet)
+  (spacemacs/set-leader-keys "ia" 'helm-yas-complete)
+  (define-key yas-minor-mode-map (kbd "TAB") yas-maybe-expand)
 
   ;;; Markdown
   ;;;; live preview
