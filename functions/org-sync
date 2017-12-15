@@ -1,9 +1,8 @@
 #! /bin/bash
 
-PWD = $(pwd)
+PWD = "$(pwd)"
 ORG_PATH = "$HOME/org"
-TODAY = $(date +%Y-%m-%d)
-
+TODAY = "$(date +%Y-%m-%d)"
 
 cd ORG_PATH
 git pull origin master
