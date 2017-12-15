@@ -16,17 +16,17 @@
        then
          echo "creating backup of $dotfile in $dotfile.bak"
          mv ~/.$dotfile ~/.$dotfile.bak
-       else
-	 rm ~/.$dotfile 
        fi
    fi
 
    if [ -L "$HOME/.$dotfile" ]
    then
-     echo "symlink for $dotfile already exists"
-   else
-     echo "creating symblink for $dotfile"
-     ln -s $(pwd)/.$dotfile ~/.$dotfile
+       echo "symlink for $dotfile already exists. deleting..."
+	     rm ~/.$dotfile 
    fi
+
+   echo "creating symblink for $dotfile"
+   ln -s $(pwd)/$dotfile ~/.$dotfile
+
   done
   echo 'done'
