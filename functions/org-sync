@@ -1,10 +1,11 @@
-#! /bin/bash
+#! /bin/sh
 
 PWD = "$(pwd)"
 ORG_PATH = "$HOME/org"
 TODAY = "$(date +%Y-%m-%d)"
 
 cd ORG_PATH
+
 git pull origin master
 git add --all
 git ci -m "sync $TODAY"
