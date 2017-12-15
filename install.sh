@@ -1,6 +1,6 @@
 #!/bin/bash
   
-  declare -a Dotfiles=('zshrc' 'spacemacs' 'gitconfig' 'gitignore' 'oh-my-zsh')
+  declare -a Dotfiles=('zshrc' 'spacemacs' 'gitconfig' 'gitignore' 'oh-my-zsh' 'functions')
   
   # inform the user and print the whole array on the screen:
   echo 'going to move the following selected .dotfiles:'
@@ -14,7 +14,7 @@
    then
        if ! [ -L "$HOME/.$dotfile" ]
        then
-         echo "creating backup of $dotfile in $dotfile.bak"
+         echo "creating backup of $dotfile in .$dotfile.bak"
          mv ~/.$dotfile ~/.$dotfile.bak
        fi
    fi
