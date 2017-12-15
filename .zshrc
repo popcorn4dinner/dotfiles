@@ -99,6 +99,9 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=10"
 #rbenv - ruby version manager
 eval "$(rbenv init -)"
 
+# make composer bineries available PATH
+export PATH="$PATH:$HOME/.composer/vendor/bin:$HOME/.functions"
+
 alias dco="docker-compose"
 alias dce="docker-compose exec"
 
