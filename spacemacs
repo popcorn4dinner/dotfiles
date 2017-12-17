@@ -40,13 +40,13 @@ values."
      auto-completion
      autohotkey
      better-defaults
+     colors
      docker
      elm
      emacs-lisp
      emoji
      evil-commentary
      git
-     markdown
      (org :variables
           org-enable-github-support t
           org-enable-reveal-js-support t)
@@ -62,7 +62,7 @@ values."
      nginx
      java
      javascript
-     (markdown :variables markdown-live-preview-engine 'gh-md)
+     (markdown :variables markdown-live-preview-engine 'vmd)
      php
      python
      react
@@ -72,6 +72,7 @@ values."
      swift
      osx
      terraform
+     theming
      typescript
      yaml
      )
@@ -95,6 +96,7 @@ values."
      multiple-cursors
      org-bullets
      org-alert
+     org-sticky-header-mode
      org-super-agenda
      real-auto-save
      )
@@ -462,6 +464,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
+  ;; (require 'org-sticky-header)
+  ;; (add-hook 'org-mode-hook (lambda () (org-sticky-header-mode 1)))
+
   ;;; Reveal.js
   (use-package ox-reveal
     :ensure ox-reveal)
@@ -473,15 +478,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq org-todo-keywords
         '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED")))
   (setq org-todo-keyword-faces
-        '(("WAITING" . (:foreground "yellow" :background default))
+        '(("TODO" . (:foreground "#002b36" :background "#5f8700"))
+          ("WAITING" . (:foreground "#002b36" :background "yellow"))
           ("CANCELED" . (:foreground "grey" :weight normal))))
-
   ;;; Projectile
   (setq-default dotspacemacs-configuration-layers
                 '((org :variables org-projectile-file "todos.org")))
-  (with-eval-after-load 'org-agenda
-    (require 'org-projectile)
-    (push (org-projectile:todo-files) org-agenda-files))
+  ;; (with-eval-after-load 'org-agenda
+  ;;   (require 'org-projectile)
+  ;;   (push (org-projectile:todo-files) org-agenda-files))
 
   ;;; Capture
   (setq org-capture-templates
@@ -489,6 +494,39 @@ before packages are loaded. If you are unsure, you should try in setting them in
            "* TODO %?\n  %i\n  %a")
           ("s" "Shopping" entry (file+olp+datetree "~/org/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")))
+  ;;; Super Agenda
+
+  (setq org-agenda-files (list "~/org/todos.org"
+                               "~/org/deadlines.org"
+                               "~/org/reminders.org"
+                               "~/org/habits.org"
+                               "~/org/bookmarks.org"
+                               "~/org/shopping.org"))
+
+  (use-package org-super-agenda
+  :config
+  (org-super-agenda-mode)
+  (setq org-super-agenda-groups
+        '( ;; Each group has an implicit boolean OR operator between its selectors.
+          (:name "Today"          ; Optionally specify section name
+                 :time-grid t     ; Items that appear on the time grid
+          :order 1)
+          (:name "Next" :todo "NEXT" :order 2)
+
+          (:name "Habits" :habit t :order 2)
+          (:todo "WAITING" :order 9)    ; Set order of this section
+          (:name "Shopping" :tag "shopping" :order 10)
+          (:name "Reading List" :tag "read" :order 15)
+          ;; Groups supply their own section names when none are given
+          (:todo ("SOMEDAY" "WATCHING")
+                 ;; Show this group at the end of the agenda (since it has the
+                 ;; highest number). If you specified this group last, items
+                 ;; with these todo keywords that e.g. have priority A would be
+                 ;; displayed in that group instead, because items are grouped
+                 ;; out in the order the groups are listed.
+                 :order 25)
+          )))
+
 
   ;; Autosave
   (require 'real-auto-save)
@@ -499,22 +537,50 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;Solarized theme
   (setq theming-modifications
         '((solarized
-           ;; Provide a sort of "on-off" modeline whereby the current buffer has a nice
-           ;; bright blue background, and all the others are in cream.
-           ;; TODO: Change to use variables here. However, got error:
-           ;; (Spacemacs) Error in dotspacemacs/user-config: Wrong type argument: stringp, pd-blue
-           (mode-line :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
-           (powerline-active1 :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
-           (powerline-active2 :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
-           (mode-line-inactive :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
-           (powerline-inactive1 :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
-           (powerline-inactive2 :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
+           (header-line ((,class (:weight bold :underline "#320068" :overline "#320068" :foreground "#fffefe" :background "#00050e"))))
+
+
+           ;;powerline
+           (mode-line :foreground "#002b36" :background "#808080" :inverse-video nil)
+           (powerline-active :foreground "#002b36"  :inverse-video nil)
+           (powerline-active1 :foreground "#808080" :background "#002b36" :inverse-video nil)
+           (powerline-active2 :foreground "#808080" :background "#002b36" :inverse-video nil)
+           (mode-line-inactive :foreground "#808080" :background "#002b36" :inverse-video nil)
+           (powerline-inactive1 :foreground "#808080" :background "#002b36" :inverse-video nil)
+           (powerline-inactive2 :foreground "#808080" :background "#002b36" :inverse-video nil)
            ;; Make a really prominent helm selection line.
-           (helm-selection :foreground "white" :background "red" :inverse-video nil)
+           (helm-selection :foreground "#585858" :background "#5f8700" :inverse-video nil)
            ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.
            (cursor :background "#b58900")
-
          )))
+      ;; steal org style from Leuven
+                (set-face-attribute 'org-checkbox nil :weight 'bold
+                                    :box '(:line-width 1 :style 'pressed-button)
+                                    :foreground "white" :background "light gray")
+                (set-face-attribute 'org-done nil :weight 'bold :box '(:line-width 1 :color "#BBBBBB")
+                                    :foreground "#8BB300" :background "#F0F0F0")
+                (set-face-attribute 'org-scheduled-previously nil :foreground "#cb4b16")
+                (set-face-attribute 'org-tag nil :weight 'normal
+                                    :box '(:line-width 1 :color "#BBBBBB") :foreground "#9A9FA4")
+                (set-face-attribute 'org-todo nil :weight 'bold
+                                    :box '(:line-width 1 :color "#D8ABA7") :foreground "#cb4b16"
+                                    :background "#FFE6E4")
+                (set-face-attribute 'org-block-begin-line nil :inherit 'org-meta-line
+                                    :background "#073642"
+                                    :foreground "#657b83" :slant 'normal)
+                (set-face-attribute 'org-block-end-line nil :inherit 'org-meta-line
+                                    :background "#073642"
+                                    :foreground "#657b83" :slant 'normal)
+                (set-face-attribute 'org-block nil
+                                    :foreground "#657b83"
+                                    :background "#073642")
+
+                (when (boundp 'hl-sentence-mode)
+                  (set-face-attribute 'hl-sentence nil
+                                      :background "#073642"))
+                (when (boundp 'which-func-mode)
+                  (set-face-attribute 'which-func nil :foreground "#DEB542"))
+
 
   ;; Now we can load the theme.
   (set-terminal-parameter nil 'background-mode 'dark)
@@ -587,7 +653,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (org-super-agenda org-alert company-quickhelp company-terraform evil-commentary real-auto-save nginx-mode flycheck-elm elm-mode ruby-refactor ox-reveal ox-gfm company-inf-ruby ac-inf-ruby php-refactor-mode rainbow-mode vmd-mode all-the-icons memoize font-lock+ spaceline-all-the-icons xterm-color unfill smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv projectile-rails rake inflections orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode minitest markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck feature-mode evil-magit magit git-commit with-editor eshell-z eshell-prompt-extras esh-help magit-popup company-statistics company chruby bundler inf-ruby auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete color-theme-solarized color-theme color-theme-solarized-theme evil-multiedit pandoc-mode ox-pandoc ht org-ref pdf-tools key-chord ivy helm-bibtex parsebib deft biblio biblio-core zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes yapfify yaml-mode web-mode web-beautify tide typescript-mode terraform-mode hcl-mode tagedit swift-mode sql-indent slim-mode scss-mode sass-mode reveal-in-osx-finder pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pbcopy osx-trash osx-dictionary livid-mode skewer-mode simple-httpd live-py-mode less-css-mode launchctl js2-refactor multiple-cursors js2-mode js-doc hy-mode helm-pydoc helm-css-scss haml-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter emoji-cheat-sheet-plus emmet-mode drupal-mode php-mode dockerfile-mode docker json-mode tablist docker-tramp json-snatcher json-reformat diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-emoji company-emacs-eclim eclim company-anaconda coffee-mode anaconda-mode pythonic ahk-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+    (rainbow-identifiers color-identifiers-mode org-super-agenda org-alert company-quickhelp company-terraform evil-commentary real-auto-save nginx-mode flycheck-elm elm-mode ruby-refactor ox-reveal ox-gfm company-inf-ruby ac-inf-ruby php-refactor-mode rainbow-mode vmd-mode all-the-icons memoize font-lock+ spaceline-all-the-icons xterm-color unfill smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv projectile-rails rake inflections orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode minitest markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck feature-mode evil-magit magit git-commit with-editor eshell-z eshell-prompt-extras esh-help magit-popup company-statistics company chruby bundler inf-ruby auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete color-theme-solarized color-theme color-theme-solarized-theme evil-multiedit pandoc-mode ox-pandoc ht org-ref pdf-tools key-chord ivy helm-bibtex parsebib deft biblio biblio-core zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes yapfify yaml-mode web-mode web-beautify tide typescript-mode terraform-mode hcl-mode tagedit swift-mode sql-indent slim-mode scss-mode sass-mode reveal-in-osx-finder pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pbcopy osx-trash osx-dictionary livid-mode skewer-mode simple-httpd live-py-mode less-css-mode launchctl js2-refactor multiple-cursors js2-mode js-doc hy-mode helm-pydoc helm-css-scss haml-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter emoji-cheat-sheet-plus emmet-mode drupal-mode php-mode dockerfile-mode docker json-mode tablist docker-tramp json-snatcher json-reformat diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-emoji company-emacs-eclim eclim company-anaconda coffee-mode anaconda-mode pythonic ahk-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
  '(phpcbf-executable "/usr/local/bin/phpcbf")
  '(phpcbf-standard "PSR2")
  '(pos-tip-background-color "#073642")
