@@ -493,6 +493,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;   (require 'org-projectile)
   ;;   (push (org-projectile:todo-files) org-agenda-files))
 
+
   ;;; Capture
   (setq org-capture-templates
         '(
@@ -505,19 +506,19 @@ before packages are loaded. If you are unsure, you should try in setting them in
            :prepend t)
 
           ("r" "Reminder" entry (file "~/org/reminders.org")
-           "* %^{What do you want to be reminded of?}\nSCHEDULED:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
+           "* TODO %^{What do you want to be reminded of?}\nSCHEDULED:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
           :prepend t)
 
           ("d" "Deadline" entry (file "~/org/deadlines.org")
-           "* %^{title?} :deadline:\nDEADLINE:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
+           "* TODO %^{title?} \nDEADLINE:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
            :prepend t)
 
           ("b" "Bookmark" entry (file "~/org/bookmarks.org")
-           "* %^{What do you need to buy?} :read-up:\n :PROPERTIES: :CREATED: %U :END"
+           "* SOMEDAY %^{title} :read-up:\n [[%^link]]\n:PROPERTIES: :CREATED: %U :END"
            :prepend t)
 
           ("s" "Shopping" entry (file "~/org/shopping.org")
-           "* %^{What do you need to buy?} :shopping:\n :PROPERTIES: :CREATED: %U :END"
+           "* NEW %^{What do you need to buy?} :shopping:\n :PROPERTIES: :CREATED: %U :END"
            :prepend t)
           ))
 
@@ -535,26 +536,26 @@ before packages are loaded. If you are unsure, you should try in setting them in
   :config
   (org-super-agenda-mode)
   (setq org-super-agenda-groups
-        '( ;; Each group has an implicit boolean OR operator between its selectors.
-          (:name "Today"          ; Optionally specify section name
-                 :time-grid t     ; Items that appear on the time grid
-          :order 1)
+        '(
+          (:name "Today"
+                 :time-grid t
+                 :order 1)
           (:name "Next" :todo "NEXT" :order 2)
 
-          (:name "Habits" :habit t :order 2)
+          (:name "Habits" :habit t :order 3)
+          (:name "Missed deadlines"
+                 :deadline "past"
+                 :order 4)
+          (:name "Upcoming deadlines"
+                 :deadline "future"
+                 :order 4)
           (:todo "WAITING" :order 9)    ; Set order of this section
           (:name "Shopping" :tag "shopping" :order 10)
-          (:name "Reading List" :tag "read-up" :order 15)
+          (:name "Reading List" :and (:tag "read-up" :todo "SOMEDAY") :order 15)
           ;; Groups supply their own section names when none are given
-          (:todo ("SOMEDAY" "WATCHING")
-                 ;; Show this group at the end of the agenda (since it has the
-                 ;; highest number). If you specified this group last, items
-                 ;; with these todo keywords that e.g. have priority A would be
-                 ;; displayed in that group instead, because items are grouped
-                 ;; out in the order the groups are listed.
-                 :order 25)
-          )))
-
+          (:todo ("SOMEDAY"))
+          )
+   ))
 
   ;; Autosave
   (require 'real-auto-save)
