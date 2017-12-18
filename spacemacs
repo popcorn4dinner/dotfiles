@@ -461,6 +461,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Org-mode
   (require 'org-habit)
+  (require 'org-log-repeat "time")
 
   ;;; Pretty Bullets
   (require 'org-bullets)
@@ -497,31 +498,38 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;; Capture
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline "~/org/todos.org" "Tasks")
-           "* TODO %?\n :PROPERTIES: :CREATED: %U :END:"
-           :prepend t)
+     ("t" "Todo" entry (file+headline "~/org/todos.org" "Tasks")
+      "* TODO %?\n :PROPERTIES: :CREATED: %U :END:"
+     :prepend t :empty-line t)
 
-          ("T" "Todo" entry (file+headline "~/org/todos.org" "Tasks")
-           "* TODO %?\n context: %a \n:PROPERTIES: :CREATED: %U :END:"
-           :prepend t)
+     ("T" "Todo with Context" entry (file+headline "~/org/todos.org" "Tasks")
+      "* TODO %?\n context: %a \n:PROPERTIES: :CREATED: %U :END:"
+     :prepend t :empty-line t)
 
-          ("r" "Reminder" entry (file "~/org/reminders.org")
-           "* TODO %^{What do you want to be reminded of?}\nSCHEDULED:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
-          :prepend t)
+     ("r" "Reminder" entry (file "~/org/reminders.org")
+      "* TODO %^{What do you want to be reminded of?}\nSCHEDULED:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
+     :prepend t :empty-line t)
 
-          ("d" "Deadline" entry (file "~/org/deadlines.org")
-           "* TODO %^{title?} \nDEADLINE:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
-           :prepend t)
+     ("d" "Deadline" entry (file "~/org/deadlines.org")
+      "* TODO %^{title?} \nDEADLINE:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
+     :prepend t :empty-line t)
 
-          ("b" "Bookmark" entry (file "~/org/bookmarks.org")
-           "* SOMEDAY %^{title} :read-up:\n [[%^link]]\n:PROPERTIES: :CREATED: %U :END"
-           :prepend t)
+     ("b" "Bookmark" entry (file "~/org/bookmarks.org")
+      "* SOMEDAY %^{title} :read-up:\n [[%^link]]\n:PROPERTIES: :CREATED: %U :END"
+     :prepend t :empty-line t)
 
-          ("s" "Shopping" entry (file "~/org/shopping.org")
-           "* NEW %^{What do you need to buy?} :shopping:\n :PROPERTIES: :CREATED: %U :END"
-           :prepend t)
-          ))
+     ("i" "Idea" entry (file+headline "~/org/todos.org" "Ideas")
+      "* SOMEDAY %?\n :PROPERTIES: :CREATED: %U :END:"
+      :prepend t :empty-line t)
 
+     ("I" "Idea with context" entry (file+headline "~/org/todos.org" "Ideas")
+      "* SOMEDAY %?\n context: %a \n:PROPERTIES: :CREATED: %U :END:"
+      :prepend t :empty-line t)
+     ("s" "Shopping" entry (file "~/org/shopping.org")
+
+      "* NEW %^{What do you need to buy?} :shopping:\n :PROPERTIES: :CREATED: %U :END"
+     :prepend t :empty-line t)
+     )) 
 
   ;;; Super Agenda
 
