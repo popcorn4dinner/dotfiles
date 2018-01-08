@@ -359,7 +359,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
   (setq auto-save-list-file-prefix temporary-file-directory)
 
-
 )
 
 (defun dotspacemacs/user-config ()
@@ -461,7 +460,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Org-mode
   (require 'org-habit)
-  (require 'org-log-repeat "time")
+  (setq org-log-repeat "time")
 
   ;;; Pretty Bullets
   (require 'org-bullets)
@@ -591,38 +590,69 @@ before packages are loaded. If you are unsure, you should try in setting them in
            (cursor :background "#b58900")
          )))
       ;; steal org style from Leuven
-                (set-face-attribute 'org-checkbox nil :weight 'bold
-                                    :box '(:line-width 1 :style 'pressed-button)
-                                    :foreground "white" :background "light gray")
-                (set-face-attribute 'org-done nil :weight 'bold :box '(:line-width 1 :color "#BBBBBB")
-                                    :foreground "#8BB300" :background "#F0F0F0")
-                (set-face-attribute 'org-scheduled-previously nil :foreground "#cb4b16")
-                (set-face-attribute 'org-tag nil :weight 'normal
-                                    :box '(:line-width 1 :color "#BBBBBB") :foreground "#9A9FA4")
-                (set-face-attribute 'org-todo nil :weight 'bold
-                                    :box '(:line-width 1 :color "#D8ABA7") :foreground "#cb4b16"
-                                    :background "#FFE6E4")
-                (set-face-attribute 'org-block-begin-line nil :inherit 'org-meta-line
-                                    :background "#073642"
-                                    :foreground "#657b83" :slant 'normal)
-                (set-face-attribute 'org-block-end-line nil :inherit 'org-meta-line
-                                    :background "#073642"
-                                    :foreground "#657b83" :slant 'normal)
-                (set-face-attribute 'org-block nil
-                                    :foreground "#657b83"
-                                    :background "#073642")
+       ;; (set-face-attribute 'org-checkbox nil :weight 'bold
+       ;;                              :box '(:line-width 1 :style 'pressed-button)
+       ;;                              :foreground "white" :background "light gray")
+       ;; (set-face-attribute 'org-done nil :weight 'bold :box '(:line-width 1 :color "#BBBBBB")
+       ;;                              :foreground "#8BB300" :background "#F0F0F0")
+       ;; (set-face-attribute 'org-scheduled-previously nil :foreground "#cb4b16")
+       ;; (set-face-attribute 'org-tag nil :weight 'normal
+       ;;                              :box '(:line-width 1 :color "#BBBBBB") :foreground "#9A9FA4")
+       ;; (set-face-attribute 'org-todo nil :weight 'bold
+       ;;                              :box '(:line-width 1 :color "#D8ABA7") :foreground "#cb4b16"
+       ;;                              :background "#FFE6E4")
+       ;; (set-face-attribute 'org-block-begin-line nil :inherit 'org-meta-line
+       ;;                              :background "#073642"
+       ;;                              :foreground "#657b83" :slant 'normal)
+       ;; (set-face-attribute 'org-block-end-line nil :inherit 'org-meta-line
+       ;;                              :background "#073642"
+       ;;                              :foreground "#657b83" :slant 'normal)
+       ;; (set-face-attribute 'org-block nil
+       ;;                              :foreground "#657b83"
+       ;;                              :background "#073642")
 
-                (when (boundp 'hl-sentence-mode)
-                  (set-face-attribute 'hl-sentence nil
-                                      :background "#073642"))
-                (when (boundp 'which-func-mode)
-                  (set-face-attribute 'which-func nil :foreground "#DEB542"))
-
+       ;; (when (boundp 'hl-sentence-mode)
+       ;;            (set-face-attribute 'hl-sentence nil
+       ;;                                :background "#073642"))
+       ;; (when (boundp 'which-func-mode)
+       ;;            (set-face-attribute 'which-func nil :foreground "#DEB542"))
 
   ;; Now we can load the theme.
   (set-terminal-parameter nil 'background-mode 'dark)
   (set-frame-parameter nil 'background-mode 'dark)
   (spacemacs/load-theme 'solarized)
+
+  (cl-defun ap/org-set-level-faces (&key (first-parent 'outline-1))
+  (require 'color)
+  (require 'dash)
+  (require 'org-inlinetask)
+  (let ((org-level-color-list (-cycle (list "#d70000" "#cb4b16" "#af8700" "#5f8700" "#00afaf" "#0087ff" "#5f5faf" "#af005f"))))
+       (cl-flet ((modify-color (color) (thread-first color
+                                          (color-desaturate-name 30))))
+          (cl-loop for level from 1 to (1- org-inlinetask-min-level)
+                   for face = (intern (format "org-level-%s" level))
+                   for parent = (cl-case level
+                                  (1 (list first-parent 'highlight))
+                                  (t (intern (format "org-level-%s" (1- level)))))
+                   for height = (cond ((= level 1) 1.3)
+                                      ((<= level 4) 0.9)
+                                      (t 1.0))
+                   for weight = (if (<= level 8) 'bold 'normal)
+                   unless (internal-lisp-face-p face)
+                   do (custom-declare-face face `((t :inherit ,(intern (format "outline-%s" (1- level)))))
+                                           (format "Face for Org level %s headings." (1- level)))
+                   do (set-face-attribute face nil
+                                          :inherit parent
+                                          :foreground (modify-color (nth level org-level-color-list))
+                                          :height height
+                                          :weight weight
+                                          :overline t)
+                   collect face into faces
+                   finally do (defconst org-level-faces faces)
+                   finally do (setq org-n-level-faces (length org-level-faces))))))
+  (ap/org-set-level-faces :first-parent 'variable-pitch)
+
+
 
   ;; Turn this off to stop it interfering with mic-paren.
   (set-face-attribute 'sp-show-pair-match-face nil :foreground 'unspecified :background 'unspecified)
