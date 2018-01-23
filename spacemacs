@@ -483,9 +483,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq org-todo-keywords
         '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED")))
   (setq org-todo-keyword-faces
-        '(("TODO" . (:foreground "#002b36" :background "#5f8700"))
-          ("WAITING" . (:foreground "#002b36" :background "yellow"))
-          ("CANCELED" . (:foreground "grey" :weight normal))))
+        '(("TODO" . (:foreground "#af005f" :background "#073642" :weight bold :slant italic :overline "#af005f"))
+          ("STARTED" . (:foreground "#5f8700" :background "#073642" :weight bold :slant italic :overline "#5f8700"))
+          ("WAITING" . (:foreground "yellow" :background "#073642" :weight bold :slant italic :overline "yellow"))
+          ("CANCELED" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))))
   ;;; Projectile
   (setq-default dotspacemacs-configuration-layers
                 '((org :variables org-projectile-file "todos.org")))
@@ -626,7 +627,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (require 'color)
   (require 'dash)
   (require 'org-inlinetask)
-  (let ((org-level-color-list (-cycle (list "#d70000" "#cb4b16" "#af8700" "#5f8700" "#00afaf" "#0087ff" "#5f5faf" "#af005f"))))
+  (let ((org-level-color-list (-cycle (list  "#d70000" "#0087ff" "#5f8700" "#af8700" "#00afaf" "#0087ff" "#5f5faf" "#af005f"))))
        (cl-flet ((modify-color (color) (thread-first color
                                           (color-desaturate-name 30))))
           (cl-loop for level from 1 to (1- org-inlinetask-min-level)
