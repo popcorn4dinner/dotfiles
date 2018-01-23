@@ -484,8 +484,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
         '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED")))
   (setq org-todo-keyword-faces
         '(("TODO" . (:foreground "#af005f" :background "#073642" :weight bold :slant italic :overline "#af005f"))
-          ("STARTED" . (:foreground "#5f8700" :background "#073642" :weight bold :slant italic :overline "#5f8700"))
+          ("STARTED" . (:foreground "#00afaf" :background "#073642" :weight bold :slant italic :overline "#00afaf"))
           ("WAITING" . (:foreground "yellow" :background "#073642" :weight bold :slant italic :overline "yellow"))
+          ("DONE" . (:foreground "#5f8700" :background "#073642" :weight bold :slant italic :overline "#5f8700"))
           ("CANCELED" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))))
   ;;; Projectile
   (setq-default dotspacemacs-configuration-layers
