@@ -491,7 +491,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;;; Todo sequence
   (setq org-todo-keywords
-        '((sequence "TODO" "WAITING" "|" "DONE" "CANCELED")))
+        '((sequence "TODO" "STARTED" "WAITING" "|" "DONE" "CANCELED")))
   (setq org-todo-keyword-faces
         '(("TODO" . (:foreground "#af005f" :background "#073642" :weight bold :slant italic :overline "#af005f"))
           ("STARTED" . (:foreground "#00afaf" :background "#073642" :weight bold :slant italic :overline "#00afaf"))
