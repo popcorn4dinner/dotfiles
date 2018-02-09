@@ -35,7 +35,7 @@ values."
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
+     ;; ------------- :ensure t)---------------------------------------------------
      helm
      auto-completion
      autohotkey
@@ -362,7 +362,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq auto-save-list-file-prefix temporary-file-directory)
 
 )
-
 (defun dotspacemacs/user-config ()
   ;; Key bindings
   ;;; General
@@ -421,7 +420,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Terraform
   (require 'company-terraform)
-  (company-terraform-init) 
+  (company-terraform-init)
 
   ;; Autocomplete
   (global-company-mode t)
@@ -469,112 +468,127 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
   ;; Org-mode
-  (require 'org-habit)
-  (setq org-log-repeat "time")
+  (with-eval-after-load 'org
+    (require 'org-habit)
+    (setq org-log-repeat "time")
 
   ;;; Pretty Bullets
-  (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (require 'org-bullets)
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-  (use-package org-sticky-header
-    :after org
-    :config
-    (setq org-sticky-header-full-path 'full)
-    (add-hook 'org-mode-hook 'org-sticky-header-mode)) 
+    (use-package org-sticky-header
+      :after org
+      :config
+      (setq org-sticky-header-full-path 'full)
+      (add-hook 'org-mode-hook 'org-sticky-header-mode))
 
   ;;; Reveal.js
-  (use-package ox-reveal
-    :ensure ox-reveal)
+    (use-package ox-reveal
+      :ensure ox-reveal)
 
-  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
-  (setq org-reveal-mathjax t)
+    (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+    (setq org-reveal-mathjax t)
 
   ;;; Todo sequence
-  (setq org-todo-keywords
-        '((sequence "TODO" "STARTED" "WAITING" "|" "DONE" "CANCELED")))
-  (setq org-todo-keyword-faces
-        '(("TODO" . (:foreground "#af005f" :background "#073642" :weight bold :slant italic :overline "#af005f"))
-          ("STARTED" . (:foreground "#00afaf" :background "#073642" :weight bold :slant italic :overline "#00afaf"))
-          ("WAITING" . (:foreground "yellow" :background "#073642" :weight bold :slant italic :overline "yellow"))
-          ("DONE" . (:foreground "#5f8700" :background "#073642" :weight bold :slant italic :overline "#5f8700"))
-          ("CANCELED" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))))
-  ;;; Projectile
-  (setq-default dotspacemacs-configuration-layers
-                '((org :variables org-projectile-file "todos.org")))
-  ;; (with-eval-after-load 'org-agenda
-  ;;   (require 'org-projectile)
-  ;;   (push (org-projectile:todo-files) org-agenda-files))
+    (setq org-todo-keywords
+          '((sequence "TODO" "STARTED" "WAITING" "|" "DONE" "CANCELED")))
+    (setq org-todo-keyword-faces
+          '(("TODO" . (:foreground "#af005f" :background "#073642" :weight bold :slant italic :overline "#af005f"))
+            ("STARTED" . (:foreground "#00afaf" :background "#073642" :weight bold :slant italic :overline "#00afaf"))
+            ("WAITING" . (:foreground "yellow" :background "#073642" :weight bold :slant italic :overline "yellow"))
+            ("DONE" . (:foreground "#5f8700" :background "#073642" :weight bold :slant italic :overline "#5f8700"))
+            ("CANCELED" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))))
+
+  )
+
+ ;;; Capture
+    (setq org-capture-templates
+          '(
+            ("t" "Todo" entry (file+headline "~/org/todos.org" "Tasks")
+             "* TODO %?\n :PROPERTIES: :CREATED: %U :END:"
+             :prepend t :empty-line t)
+
+            ("T" "Todo with Context" entry (file+headline "~/org/todos.org" "Tasks")
+             "* TODO %?\n context: %a \n:PROPERTIES: :CREATED: %U :END:"
+             :prepend t :empty-line t)
+
+            ("r" "Reminder" entry (file "~/org/reminders.org")
+             "* TODO %^{What do you want to be reminded of?}\nSCHEDULED:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
+             :prepend t :empty-line t)
+
+            ("d" "Deadline" entry (file "~/org/deadlines.org")
+             "* TODO %^{title?} \nDEADLINE:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
+             :prepend t :empty-line t)
+
+            ("b" "Bookmark" entry (file "~/org/bookmarks.org")
+             "* SOMEDAY %^{title} :read-up:\n [[%^link]]\n:PROPERTIES: :CREATED: %U :END"
+             :prepend t :empty-line t)
+
+            ("i" "Idea" entry (file+headline "~/org/todos.org" "Ideas")
+             "* SOMEDAY %?\n :PROPERTIES: :CREATED: %U :END:"
+             :prepend t :empty-line t)
+
+            ("I" "Idea with context" entry (file+headline "~/org/todos.org" "Ideas")
+             "* SOMEDAY %?\n context: %a \n:PROPERTIES: :CREATED: %U :END:"
+             :prepend t :empty-line t)
+            ("s" "Shopping" entry (file "~/org/shopping.org")
+
+             "* NEW %^{What do you need to buy?} :shopping:\n :PROPERTIES: :CREATED: %U :END"
+             :prepend t :empty-line t)
+            ))
 
 
-  ;;; Capture
-  (setq org-capture-templates
-        '(
-     ("t" "Todo" entry (file+headline "~/org/todos.org" "Tasks")
-      "* TODO %?\n :PROPERTIES: :CREATED: %U :END:"
-     :prepend t :empty-line t)
+    (setq org-agenda-files (list "~/org/todos.org"
+                                 "~/org/deadlines.org"
+                                 "~/org/reminders.org"
+                                 "~/org/habits.org"
+                                 "~/org/bookmarks.org"
+                                 "~/org/shopping.org"))
 
-     ("T" "Todo with Context" entry (file+headline "~/org/todos.org" "Tasks")
-      "* TODO %?\n context: %a \n:PROPERTIES: :CREATED: %U :END:"
-     :prepend t :empty-line t)
+  (with-eval-after-load 'org-agenda
 
-     ("r" "Reminder" entry (file "~/org/reminders.org")
-      "* TODO %^{What do you want to be reminded of?}\nSCHEDULED:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
-     :prepend t :empty-line t)
-
-     ("d" "Deadline" entry (file "~/org/deadlines.org")
-      "* TODO %^{title?} \nDEADLINE:%^{when?}T \n:PROPERTIES: :CREATED: %U :END"
-     :prepend t :empty-line t)
-
-     ("b" "Bookmark" entry (file "~/org/bookmarks.org")
-      "* SOMEDAY %^{title} :read-up:\n [[%^link]]\n:PROPERTIES: :CREATED: %U :END"
-     :prepend t :empty-line t)
-
-     ("i" "Idea" entry (file+headline "~/org/todos.org" "Ideas")
-      "* SOMEDAY %?\n :PROPERTIES: :CREATED: %U :END:"
-      :prepend t :empty-line t)
-
-     ("I" "Idea with context" entry (file+headline "~/org/todos.org" "Ideas")
-      "* SOMEDAY %?\n context: %a \n:PROPERTIES: :CREATED: %U :END:"
-      :prepend t :empty-line t)
-     ("s" "Shopping" entry (file "~/org/shopping.org")
-
-      "* NEW %^{What do you need to buy?} :shopping:\n :PROPERTIES: :CREATED: %U :END"
-     :prepend t :empty-line t)
-     )) 
+   ;;; Projectile
+    (use-package org-projectile
+      :bind (("C-c n p" . org-projectile-project-todo-completing-read)
+             ("C-c c" . org-capture))
+      :config
+      (progn
+        (org-projectile-per-project)
+        (setq org-projectile-per-project-filepath "todos.org")
+        (push (org-projectile-project-todo-entry) org-capture-templates)
+        (setq org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
+      )
+      :ensure t)
 
   ;;; Super Agenda
 
-  (setq org-agenda-files (list "~/org/todos.org"
-                               "~/org/deadlines.org"
-                               "~/org/reminders.org"
-                               "~/org/habits.org"
-                               "~/org/bookmarks.org"
-                               "~/org/shopping.org"))
+    (use-package org-super-agenda
+      :config
+      (progn
+      (org-super-agenda-mode)
+      (setq  org-super-agenda-groups
+             '(
+        
+               (:name "In progress" :todo "STARTED" :order 2)
 
-  (use-package org-super-agenda
-  :config
-  (org-super-agenda-mode)
-  (setq org-super-agenda-groups
-        '(
-          (:name "Today"
-                 :time-grid t
-                 :order 1)
-          (:name "Next" :todo "NEXT" :order 2)
+               (:name "Next" :todo "NEXT" :order 3)
 
-          (:name "Habits" :habit t :order 3)
-          (:name "Missed deadlines"
-                 :deadline "past"
-                 :order 4)
-          (:name "Upcoming deadlines"
-                 :deadline "future"
-                 :order 4)
-          (:todo "WAITING" :order 9)    ; Set order of this section
-          (:name "Shopping" :tag "shopping" :order 10)
-          (:name "Reading List" :and (:tag "read-up" :todo "SOMEDAY") :order 15)
-          ;; Groups supply their own section names when none are given
-          (:todo ("SOMEDAY"))
-          )
-   ))
+               (:name "Missed deadlines"
+                      :deadline "past"
+                      :order 4)
+               (:name "Upcoming deadlines"
+                      :deadline "future"
+                      :order 5)
+               (:name "Backlog" :todo "TODO" :order 3)
+
+               (:todo "WAITING" :order 9)
+               (:auto-group t :order 99))
+             )
+      )
+      :ensure t)
+
+  )
+
 
   ;; Autosave
   (require 'real-auto-save)
@@ -601,33 +615,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
            ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.
            (cursor :background "#b58900")
          )))
-      ;; steal org style from Leuven
-       ;; (set-face-attribute 'org-checkbox nil :weight 'bold
-       ;;                              :box '(:line-width 1 :style 'pressed-button)
-       ;;                              :foreground "white" :background "light gray")
-       ;; (set-face-attribute 'org-done nil :weight 'bold :box '(:line-width 1 :color "#BBBBBB")
-       ;;                              :foreground "#8BB300" :background "#F0F0F0")
-       ;; (set-face-attribute 'org-scheduled-previously nil :foreground "#cb4b16")
-       ;; (set-face-attribute 'org-tag nil :weight 'normal
-       ;;                              :box '(:line-width 1 :color "#BBBBBB") :foreground "#9A9FA4")
-       ;; (set-face-attribute 'org-todo nil :weight 'bold
-       ;;                              :box '(:line-width 1 :color "#D8ABA7") :foreground "#cb4b16"
-       ;;                              :background "#FFE6E4")
-       ;; (set-face-attribute 'org-block-begin-line nil :inherit 'org-meta-line
-       ;;                              :background "#073642"
-       ;;                              :foreground "#657b83" :slant 'normal)
-       ;; (set-face-attribute 'org-block-end-line nil :inherit 'org-meta-line
-       ;;                              :background "#073642"
-       ;;                              :foreground "#657b83" :slant 'normal)
-       ;; (set-face-attribute 'org-block nil
-       ;;                              :foreground "#657b83"
-       ;;                              :background "#073642")
-
-       ;; (when (boundp 'hl-sentence-mode)
-       ;;            (set-face-attribute 'hl-sentence nil
-       ;;                                :background "#073642"))
-       ;; (when (boundp 'which-func-mode)
-       ;;            (set-face-attribute 'which-func nil :foreground "#DEB542"))
 
   ;; Now we can load the theme.
   (set-terminal-parameter nil 'background-mode 'dark)
@@ -730,9 +717,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
  '(nrepl-message-colors
    (quote
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+ '(org-agenda-files
+   (quote
+    ("~/org/todos.org" "~/org/deadlines.org" "~/org/reminders.org" "~/org/habits.org" "~/org/bookmarks.org" "~/org/shopping.org" "~/Projects/.dotfiles/todos.org" "~/Projects/shepherd/todos.org" "~/Projects/ppx_foundation/status-storage/todos.org" "~/Projects/infrastructure/tack/todos.org")))
  '(package-selected-packages
    (quote
-    (drag-stuff evil-string-inflection string-inflection org-sticky-header rainbow-identifiers color-identifiers-mode org-super-agenda org-alert company-quickhelp company-terraform evil-commentary real-auto-save nginx-mode flycheck-elm elm-mode ruby-refactor ox-reveal ox-gfm company-inf-ruby ac-inf-ruby php-refactor-mode rainbow-mode vmd-mode all-the-icons memoize font-lock+ spaceline-all-the-icons xterm-color unfill smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv projectile-rails rake inflections orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode minitest markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck feature-mode evil-magit magit git-commit with-editor eshell-z eshell-prompt-extras esh-help magit-popup company-statistics company chruby bundler inf-ruby auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete color-theme-solarized color-theme color-theme-solarized-theme evil-multiedit pandoc-mode ox-pandoc ht org-ref pdf-tools key-chord ivy helm-bibtex parsebib deft biblio biblio-core zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes yapfify yaml-mode web-mode web-beautify tide typescript-mode terraform-mode hcl-mode tagedit swift-mode sql-indent slim-mode scss-mode sass-mode reveal-in-osx-finder pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pbcopy osx-trash osx-dictionary livid-mode skewer-mode simple-httpd live-py-mode less-css-mode launchctl js2-refactor multiple-cursors js2-mode js-doc hy-mode helm-pydoc helm-css-scss haml-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter emoji-cheat-sheet-plus emmet-mode drupal-mode php-mode dockerfile-mode docker json-mode tablist docker-tramp json-snatcher json-reformat diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-emoji company-emacs-eclim eclim company-anaconda coffee-mode anaconda-mode pythonic ahk-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+    (org-mime drag-stuff evil-string-inflection string-inflection org-sticky-header rainbow-identifiers color-identifiers-mode org-super-agenda org-alert company-quickhelp company-terraform evil-commentary real-auto-save nginx-mode flycheck-elm elm-mode ruby-refactor ox-reveal ox-gfm company-inf-ruby ac-inf-ruby php-refactor-mode rainbow-mode vmd-mode all-the-icons memoize font-lock+ spaceline-all-the-icons xterm-color unfill smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv projectile-rails rake inflections orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode minitest markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck feature-mode evil-magit magit git-commit with-editor eshell-z eshell-prompt-extras esh-help magit-popup company-statistics company chruby bundler inf-ruby auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete color-theme-solarized color-theme color-theme-solarized-theme evil-multiedit pandoc-mode ox-pandoc ht org-ref pdf-tools key-chord ivy helm-bibtex parsebib deft biblio biblio-core zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes yapfify yaml-mode web-mode web-beautify tide typescript-mode terraform-mode hcl-mode tagedit swift-mode sql-indent slim-mode scss-mode sass-mode reveal-in-osx-finder pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pbcopy osx-trash osx-dictionary livid-mode skewer-mode simple-httpd live-py-mode less-css-mode launchctl js2-refactor multiple-cursors js2-mode js-doc hy-mode helm-pydoc helm-css-scss haml-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter emoji-cheat-sheet-plus emmet-mode drupal-mode php-mode dockerfile-mode docker json-mode tablist docker-tramp json-snatcher json-reformat diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-emoji company-emacs-eclim eclim company-anaconda coffee-mode anaconda-mode pythonic ahk-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
  '(phpcbf-executable "/usr/local/bin/phpcbf")
  '(phpcbf-standard "PSR2")
  '(pos-tip-background-color "#073642")
