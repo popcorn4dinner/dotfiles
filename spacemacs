@@ -62,6 +62,9 @@ values."
      nginx
      java
      javascript
+     itome-react
+     (typescript :variables
+                 typescript-fmt-tool 'typescript-formatter)
      (markdown :variables markdown-live-preview-engine 'vmd)
      php
      python
@@ -397,6 +400,28 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;;; live preview
   (spacemacs/set-leader-keys-for-major-mode 'emacs-markdown-mode "mp" 'markdown-live-preview-mode)
 
+  ;; javascript
+  (setq-default
+   ;; js2-mod
+   js2-basic-offset 2
+   js-indent-level 2
+   js-switch-indent-offset 2
+   ;; web-mode
+   css-indent-offset 2
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-attr-indent-offset 2)
+
+  ;; typescript
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                (setup-tide-mode))))
+  ;; enable typescript-tslint checker
+  (flycheck-add-mode 'typescript-tslint 'web-mode)
+
   ;; PHP
   ;;; refactor mode
   (require 'php-refactor-mode)
@@ -491,13 +516,17 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;;; Todo sequence
     (setq org-todo-keywords
-          '((sequence "TODO" "STARTED" "WAITING" "|" "DONE" "CANCELED")))
+          '((sequence "TODO" "NEXT" "STARTED" "WAITING" "|" "DONE" "CANCELED")))
     (setq org-todo-keyword-faces
           '(("TODO" . (:foreground "#af005f" :background "#073642" :weight bold :slant italic :overline "#af005f"))
             ("STARTED" . (:foreground "#00afaf" :background "#073642" :weight bold :slant italic :overline "#00afaf"))
             ("WAITING" . (:foreground "yellow" :background "#073642" :weight bold :slant italic :overline "yellow"))
+            ("NEXT" . (:foreground "#0087ff" :background "#073642" :weight bold :slant italic :overline "#0087ff"))
             ("DONE" . (:foreground "#5f8700" :background "#073642" :weight bold :slant italic :overline "#5f8700"))
-            ("CANCELED" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))))
+            ("CANCELED" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))
+            ("SOMEDAY" . (:foreground "#0087ff" :background "#073642" :weight bold :slant italic :overline "#0087ff"))
+
+            ))
 
   )
 
@@ -568,7 +597,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (org-super-agenda-mode)
       (setq  org-super-agenda-groups
              '(
-        
+
                (:name "In progress" :todo "STARTED" :order 2)
 
                (:name "Next" :todo "NEXT" :order 3)
@@ -579,7 +608,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
                (:name "Upcoming deadlines"
                       :deadline "future"
                       :order 5)
-               (:name "Backlog" :todo "TODO" :order 3)
+               (:name "Backlog" :todo "TODO" :order 6)
 
                (:todo "WAITING" :order 9)
                (:auto-group t :order 99))
@@ -722,7 +751,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     ("~/org/todos.org" "~/org/deadlines.org" "~/org/reminders.org" "~/org/habits.org" "~/org/bookmarks.org" "~/org/shopping.org" "~/Projects/.dotfiles/todos.org" "~/Projects/shepherd/todos.org" "~/Projects/ppx_foundation/status-storage/todos.org" "~/Projects/infrastructure/tack/todos.org")))
  '(package-selected-packages
    (quote
-    (org-mime drag-stuff evil-string-inflection string-inflection org-sticky-header rainbow-identifiers color-identifiers-mode org-super-agenda org-alert company-quickhelp company-terraform evil-commentary real-auto-save nginx-mode flycheck-elm elm-mode ruby-refactor ox-reveal ox-gfm company-inf-ruby ac-inf-ruby php-refactor-mode rainbow-mode vmd-mode all-the-icons memoize font-lock+ spaceline-all-the-icons xterm-color unfill smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv projectile-rails rake inflections orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode minitest markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck feature-mode evil-magit magit git-commit with-editor eshell-z eshell-prompt-extras esh-help magit-popup company-statistics company chruby bundler inf-ruby auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete color-theme-solarized color-theme color-theme-solarized-theme evil-multiedit pandoc-mode ox-pandoc ht org-ref pdf-tools key-chord ivy helm-bibtex parsebib deft biblio biblio-core zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes yapfify yaml-mode web-mode web-beautify tide typescript-mode terraform-mode hcl-mode tagedit swift-mode sql-indent slim-mode scss-mode sass-mode reveal-in-osx-finder pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pbcopy osx-trash osx-dictionary livid-mode skewer-mode simple-httpd live-py-mode less-css-mode launchctl js2-refactor multiple-cursors js2-mode js-doc hy-mode helm-pydoc helm-css-scss haml-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter emoji-cheat-sheet-plus emmet-mode drupal-mode php-mode dockerfile-mode docker json-mode tablist docker-tramp json-snatcher json-reformat diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-emoji company-emacs-eclim eclim company-anaconda coffee-mode anaconda-mode pythonic ahk-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+    (rjsx-mode org-mime drag-stuff evil-string-inflection string-inflection org-sticky-header rainbow-identifiers color-identifiers-mode org-super-agenda org-alert company-quickhelp company-terraform evil-commentary real-auto-save nginx-mode flycheck-elm elm-mode ruby-refactor ox-reveal ox-gfm company-inf-ruby ac-inf-ruby php-refactor-mode rainbow-mode vmd-mode all-the-icons memoize font-lock+ spaceline-all-the-icons xterm-color unfill smeargle shell-pop rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv projectile-rails rake inflections orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download mwim multi-term mmm-mode minitest markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck feature-mode evil-magit magit git-commit with-editor eshell-z eshell-prompt-extras esh-help magit-popup company-statistics company chruby bundler inf-ruby auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete color-theme-solarized color-theme color-theme-solarized-theme evil-multiedit pandoc-mode ox-pandoc ht org-ref pdf-tools key-chord ivy helm-bibtex parsebib deft biblio biblio-core zenburn-theme zen-and-art-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes yapfify yaml-mode web-mode web-beautify tide typescript-mode terraform-mode hcl-mode tagedit swift-mode sql-indent slim-mode scss-mode sass-mode reveal-in-osx-finder pyvenv pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pbcopy osx-trash osx-dictionary livid-mode skewer-mode simple-httpd live-py-mode less-css-mode launchctl js2-refactor multiple-cursors js2-mode js-doc hy-mode helm-pydoc helm-css-scss haml-mode git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter emoji-cheat-sheet-plus emmet-mode drupal-mode php-mode dockerfile-mode docker json-mode tablist docker-tramp json-snatcher json-reformat diff-hl cython-mode company-web web-completion-data company-tern dash-functional tern company-emoji company-emacs-eclim eclim company-anaconda coffee-mode anaconda-mode pythonic ahk-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
  '(phpcbf-executable "/usr/local/bin/phpcbf")
  '(phpcbf-standard "PSR2")
  '(pos-tip-background-color "#073642")
