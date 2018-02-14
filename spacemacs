@@ -654,7 +654,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (require 'color)
   (require 'dash)
   (require 'org-inlinetask)
-  (let ((org-level-color-list (-cycle (list  "#d70000" "#0087ff" "#5f8700" "#af8700" "#00afaf" "#0087ff" "#5f5faf" "#af005f"))))
+  (let ((org-level-color-list (-cycle (list  "#d70000" "#0087ff" "#00afaf" "#af8700" "#af005f" "#5f8700" "#0087ff" "#5f5faf" ))))
        (cl-flet ((modify-color (color) (thread-first color
                                           (color-desaturate-name 30))))
           (cl-loop for level from 1 to (1- org-inlinetask-min-level)
