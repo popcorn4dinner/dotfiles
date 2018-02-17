@@ -566,13 +566,12 @@ before packages are loaded. If you are unsure, you should try in setting them in
              :prepend t :empty-line t)
             ))
 
-
-    (setq org-agenda-files (list "~/org/todos.org"
-                                 "~/org/deadlines.org"
-                                 "~/org/reminders.org"
-                                 "~/org/habits.org"
-                                 "~/org/bookmarks.org"
-                                 "~/org/shopping.org"))
+    (setq org-agenda-files (apply 'append
+                                  (mapcar
+                                   (lambda (directory)
+                                     (directory-files-recursively
+                                      directory org-agenda-file-regexp))
+                                   '("~/org/" "~/Documents/"))))
 
   (with-eval-after-load 'org-agenda
 
