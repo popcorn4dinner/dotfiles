@@ -519,7 +519,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (setq org-todo-keywords
           '(
             (sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")
-            (sequence "SOMEDAY" "NEXT" "|" "KEEP" "DELETE")
+            (sequence "SOMEDAY(s)" "NOW" "|" "KEEP" "DELETE")
 
             ))
     (setq org-todo-keyword-faces
@@ -558,7 +558,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
              :prepend t :empty-line t)
 
             ("b" "Bookmark" entry (file "~/org/bookmarks.org")
-             "* SOMEDAY read %(org-cliplink-capture) :TO-READ:\n \n:PROPERTIES: :CREATED: %U :END"
+             "* SOMEDAY read %(org-cliplink-capture) \n:TO-READ: \n:PROPERTIES: :CREATED: %U :END"
              :prepend t :empty-line t)
 
             ("i" "Idea" entry (file+headline "~/org/todos.org" "Ideas")
@@ -574,16 +574,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
              :prepend t :empty-line t)
             ))
 
+
+  (with-eval-after-load 'org-agenda
+
     (setq org-agenda-files (apply 'append
                                   (mapcar
                                    (lambda (directory)
                                      (directory-files-recursively
                                       directory org-agenda-file-regexp))
                                    '("~/org/" "~/Documents/"))))
-
-  (with-eval-after-load 'org-agenda
-
-   ;;; Projectile
+   Projectile
     (use-package org-projectile
       :bind (("C-c n p" . org-projectile-project-todo-completing-read)
              ("C-c c" . org-capture))
@@ -647,13 +647,15 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 
            ;;powerline
-           (mode-line :foreground "#002b36" :background "#808080" :inverse-video nil)
+           (mode-line :foreground "#002b36" :background "#585858" :inverse-video nil)
            (powerline-active :foreground "#002b36"  :inverse-video nil)
            (powerline-active1 :foreground "#808080" :background "#002b36" :inverse-video nil)
            (powerline-active2 :foreground "#808080" :background "#002b36" :inverse-video nil)
            (mode-line-inactive :foreground "#808080" :background "#002b36" :inverse-video nil)
            (powerline-inactive1 :foreground "#808080" :background "#002b36" :inverse-video nil)
            (powerline-inactive2 :foreground "#808080" :background "#002b36" :inverse-video nil)
+           (org-pomodoro-mode-line :foreground "#5f8700" :weight bold :slant italic)
+           (org-pomodoro-mode-line-break :foreground "#af005f" :weight bold :slant italic)
            ;; Make a really prominent helm selection line.
            (helm-selection :foreground "#585858" :background "#5f8700" :inverse-video nil)
            ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.

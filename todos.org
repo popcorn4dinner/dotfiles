@@ -1,2 +1,13 @@
 * DONE do something 
   CLOSED: [2018-02-09 Fri 17:13]
+* NEXT fix recursive file scanning 
+* DONE test promodoro
+  CLOSED: [2018-02-19 Mon 15:04]
+  :LOGBOOK:
+  CLOCK: [2018-02-19 Mon 13:47]--[2018-02-19 Mon 14:12] =>  0:25
+  :END:
+* DONE better styles for promodoro
+  CLOSED: [2018-02-19 Mon 15:04]
+  :LOGBOOK:
+  CLOCK: [2018-02-19 Mon 14:34]--[2018-02-19 Mon 14:59] =>  0:25
+  :END:
