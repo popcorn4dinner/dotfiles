@@ -1,6 +1,6 @@
 * DONE do something 
   CLOSED: [2018-02-09 Fri 17:13]
-* NEXT fix recursive file scanning 
+* WAITING fix recursive file scanning 
 * DONE test promodoro
   CLOSED: [2018-02-19 Mon 15:04]
   :LOGBOOK:
