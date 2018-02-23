@@ -620,7 +620,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
                (:name "Backlog" :todo "TODO" :order 6)
 
                (:name "Waiting" :todo "WAITING" :order 9)
-               (:name "On hold" :todo "HOLD" :order 9)
+               (:name "On hold" :todo "HOLD" :order 10)
                (:name "Urgent Reading"
                       :and (
                              :todo "NOW"
