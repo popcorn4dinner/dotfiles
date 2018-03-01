@@ -517,7 +517,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;; Todo sequence
     (setq org-todo-keywords
           '(
-            (sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "HOLD(h)" "CANCELED(c)")
+            (sequence "TODO(t)" "NEXT(n)" "STARTED(s)" "WAITING(w)" "HOLD(h)" "|" "DONE(d)" "CANCELED(c)")
             (sequence "SOMEDAY(s)" "NOW" "|" "KEEP" "DELETE")
 
             ))

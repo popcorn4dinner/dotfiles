@@ -102,6 +102,9 @@ eval "$(rbenv init -)"
 # make composer bineries available PATH
 export PATH="$PATH:$HOME/.composer/vendor/bin:$HOME/.functions"
 
+# pleaseing homebrew
+export PATH="/usr/local/sbin:$PATH"
+
 alias dco="docker-compose"
 alias dce="docker-compose exec"
 
