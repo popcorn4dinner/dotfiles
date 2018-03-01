@@ -27,7 +27,7 @@ apps=(
     go
     graphite2
     graphviz
-    imagemagick@6
+    imagemagick --with-webp
     jpeg
     jq
     kubernetes-cli
@@ -36,6 +36,7 @@ apps=(
     libyaml
     markdown
     mysql
+    ncdu
     nettle
     node
     openshift-cli
@@ -57,11 +58,8 @@ apps=(
     zsh
     zsh-history-substring-search
     zsh-syntax-highlighting
+    z
 )
 
 brew install "${apps[@]}"
-
-export DOTFILES_BREW_PREFIX_COREUTILS=`brew --prefix coreutils`
-set-config "DOTFILES_BREW_PREFIX_COREUTILS" "$DOTFILES_BREW_PREFIX_COREUTILS" "$DOTFILES_CACHE"
-
-ln -sfv "$DOTFILES_DIR/etc/mackup/.mackup.cfg" ~
+brew cleanup
