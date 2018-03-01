@@ -17,53 +17,41 @@ brew upgrade
 
 apps=(
     ansible
+    awscli
+    cairo
+    composer
+    diff-so-fancy
+    elm
+    freetype
+    git
     go
+    graphite2
+    graphviz
+    imagemagick@6
+    jpeg
+    jq
+    kubernetes-cli
+    librsvg
     libxml2
+    libyaml
+    markdown
+    mysql
+    nettle
+    node
+    openshift-cli
+    openssl
+    packer
+    php72
+    php-code-sniffer
+    phpunit
     python
     python3
-    autoconf
-    gobject-introspection
-    libyaml
-    awscli
-    graphite2
-    markdown
-    rakudo-star
-    cairo
-    graphviz
-    mysql
     rbenv
     ruby-build
-    composer
-    harfbuzz
-    nettle
-    readline
-    coreutils
-    icu4c
-    node
-    diff-so-fancy
-    imagemagick@6
-    oniguruma
-    shared-mime-info
-    elm
-    jpeg
-    openshift-cli
-    socat
-    fontconfig
-    jq
-    openssl
     sqlite
-    freetype
-    kubernetes-cli
     terraform
-    packer
     watchman
-    gettext
-    git
-    librsvg
-    php-code-sniffer
     wget
-    php72
-    phpunit
     xz
     yarn
     zsh
