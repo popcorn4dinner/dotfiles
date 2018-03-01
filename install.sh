@@ -1,5 +1,10 @@
 #!/bin/bash
-  
+
+  sh ./install/brew.sh
+  sh ./install/brew-cask.sh
+  sh ./install/gem.sh
+  sh ./install/yarn.sh 
+
   declare -a Dotfiles=('zshrc' 'spacemacs' 'gitconfig' 'gitignore' 'oh-my-zsh' 'functions')
   
   # inform the user and print the whole array on the screen:
