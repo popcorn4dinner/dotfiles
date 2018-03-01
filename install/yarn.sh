@@ -9,6 +9,7 @@ packages=(
     gulp-cli
     react-native-cli
     tern
+    underscore-cli
     vmd
 )
 
