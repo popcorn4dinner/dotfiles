@@ -37,7 +37,10 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ------------- :ensure t)---------------------------------------------------
      helm
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t
+                      )
      autohotkey
      better-defaults
      colors
@@ -393,9 +396,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/set-leader-keys "jG" 'dumb-jump-go-other-window)
 
   ;;;; YaSnippet
-  (require 'yasnippet)
   (spacemacs/set-leader-keys "ia" 'helm-yas-complete)
-  (define-key yas-minor-mode-map (kbd "TAB") yas-maybe-expand)
 
   ;;; Markdown
   ;;;; live preview

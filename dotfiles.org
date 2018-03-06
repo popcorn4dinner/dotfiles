@@ -11,5 +11,6 @@
   :LOGBOOK:
   CLOCK: [2018-02-19 Mon 14:34]--[2018-02-19 Mon 14:59] =>  0:25
   :END:
-* STARTED add software packages
+* DONE add software packages
+  CLOSED: [2018-03-01 Thu 16:43]
 
