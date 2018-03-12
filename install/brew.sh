@@ -1,9 +1,9 @@
-if ! is-macos -o ! is-executable ruby -o ! is-executable curl -o ! is-executable git; then
-    echo "Skipped: Homebrew (missing: ruby, curl and/or git)"
-    return
+if ! if [[ -x "/usr/local/bin/brew" ]] then
+    echo "Installing homebrew"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+echo "Installing dependencies with homebrew..."
 
 brew tap homebrew/core
 brew tap homebrew/php
@@ -47,6 +47,7 @@ apps=(
     phpunit
     python
     pyenv
+    readline
     rbenv
     ruby-build
     sqlite
@@ -73,3 +74,4 @@ pyenv global 2.6.4
 rbenv install 2.3.6
 rbenv install 2.4.3
 rbenv global 2.4.3
+

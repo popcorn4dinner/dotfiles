@@ -1,7 +1,7 @@
-if ! is-macos -o ! is-executable brew; then
-    echo "Skipped: Homebrew-Cask"
-    return
-fi
+if if [[ -x "/usr/local/bin/brew" ]] then
+   "Homebrew not installed."
+else
+
 
 brew tap caskroom/versions
 brew tap caskroom/cask
@@ -36,3 +36,4 @@ brew cask install "${apps[@]}"
 brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize webpquicklook suspicious-package qlvideo
 
 brew cask cleanup
+fi
