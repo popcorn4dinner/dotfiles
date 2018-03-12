@@ -99,6 +99,12 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=10"
 #rbenv - ruby version manager
 eval "$(rbenv init -)"
 
+#pyenv - python version manager
+export PYENV_ROOT="$HOME/.pyenv
+export PATH="$PYENV_ROOT/bin:$PATH
+eval "$(pyenv init -)
+
+
 # make composer bineries available PATH
 export PATH="$PATH:$HOME/.composer/vendor/bin:$HOME/.functions"
 
