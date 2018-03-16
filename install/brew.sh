@@ -53,6 +53,7 @@ apps=(
     ruby-build
     sqlite
     terraform
+    tig
     tree
     thefuck
     ttygif
