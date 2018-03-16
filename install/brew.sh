@@ -23,6 +23,7 @@ apps=(
     diff-so-fancy
     elm
     freetype
+    httpie
     git
     go
     graphite2
@@ -52,6 +53,8 @@ apps=(
     ruby-build
     sqlite
     terraform
+    tree
+    thefuck
     watchman
     wget
     xz

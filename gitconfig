@@ -1,6 +1,15 @@
 [user]
 	name = Bastian Schnieders
 	email = bastian.schnieders@stepstone.be
+[color]
+	ui = true
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 [credential]
 	helper = osxkeychain
 [alias]
@@ -11,6 +20,7 @@
 	st = status
 	unstage = reset HEAD --
 	last = log -1 HEAD
+  tree = log --graph
 [core]
 	autocrlf = input
   excludesfile = ~/.gitignore
@@ -19,12 +29,10 @@
   default = current
 [rebase]
 	autosquash = true
-[color]
-	ui = true
-[color "diff"]
-	meta = yellow
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+[merge]
+  tool = meld
+[mergetool]
+  prompt = false
+[mergetool "meld"]
+  trustExitCode = true
+  cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"

@@ -22,6 +22,7 @@ apps=(
     hammerspoon
     kaleidoscope
     macdown
+    meld
     postman
     slack
     spotify
