@@ -27,6 +27,7 @@ function envup() {
 
 # git stuff
 function wip(){ git ci -am "squash! work in progress $@" }
+
 function fix(){ git ci -am "fixup! $@" }
 
 #Stepstone AWS login

@@ -6,6 +6,7 @@ fi
 # Globally install with npm
 
 packages=(
+    fkill-cli
     gulp-cli
     react-native-cli
     tern
