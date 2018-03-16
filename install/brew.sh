@@ -55,6 +55,7 @@ apps=(
     terraform
     tree
     thefuck
+    ttygif
     watchman
     wget
     xz
