@@ -1,0 +1,51 @@
+# Tig configuration
+#
+# Please see 'man tigrc' for a complete reference.?
+
+# Colors
+# ------
+
+# The colors in the UI can be customized. In addition to the colors used
+# for the UI you can also define new colors to use in the pager, blob,
+# diff, and stage views by placing the text to match for in quotes.
+#
+# Prefix the name of a view to set a color only for that view, e.g.
+#
+#	color grep.file blue default
+#
+# As an example, this setting will to color Signed-off-by lines with a
+# yellow foreground color and use the default background color.
+#
+#	color "    Signed-off-by"	yellow	default
+#
+# Note the four leading spaces in the string to match. This is because
+# Git automatically indents commit messages by four spaces.
+
+color "---"			blue	default
+color "diff --"			yellow	default
+color "--- "			yellow	default
+color "+++ "			yellow	default
+color "@@"			magenta	default
+color "+"			cyan	default
+color " +"			cyan	default
+color "-"			red	default
+color " -"			red	default
+color "index "			blue	default
+color "old file mode "		yellow	default
+color "new file mode "		yellow	default
+color "deleted file mode "	yellow	default
+color "copy from "		yellow	default
+color "copy to "		yellow	default
+color "rename from "		red	default
+color "rename to "		green	default
+color "similarity "		yellow	default
+color "dissimilarity "		yellow	default
+color "diff-tree "		blue	default
+color "Author: "		green	default
+color "Commit: "		default	default
+color "Tagger: "		default	default
+color "Merge: "			default	default
+color "Date: "			default	default
+color "AuthorDate: "		default	default
+color "CommitDate: "		default	default
+color "TaggerDate: "		default	default

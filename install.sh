@@ -5,7 +5,16 @@
   sh ./install/gem.sh
   sh ./install/yarn.sh
 
-  declare -a Dotfiles=('zshrc' 'spacemacs' 'gitconfig' 'gitignore' 'oh-my-zsh' 'functions' 'aliases')
+  declare -a Dotfiles=(
+      'zshrc'
+      'spacemacs'
+      'gitconfig'
+      'gitignore'
+      'oh-my-zsh'
+      'functions'
+      'aliases'
+      'tigrc'
+  )
 
   # inform the user and print the whole array on the screen:
   echo 'going to move the following selected .dotfiles:'

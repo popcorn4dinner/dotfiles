@@ -7,8 +7,8 @@
 	meta = yellow
 	frag = magenta bold
 	commit = yellow bold
-	old = red bold
-	new = green bold
+	old = red
+	new = green
 	whitespace = red reverse
 [credential]
 	helper = osxkeychain
