@@ -6,7 +6,11 @@ fi
 # Globally install with npm
 
 packages=(
+    babel-eslint
+    eslint
+    eslint-plugin-react
     fkill-cli
+    js-beautify
     gulp-cli
     react-native-cli
     tern
