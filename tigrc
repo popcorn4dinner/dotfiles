@@ -41,7 +41,7 @@ color "rename to "		green	default
 color "similarity "		yellow	default
 color "dissimilarity "		yellow	default
 color "diff-tree "		blue	default
-color "Author: "		green	default
+color "Author: "		default	default
 color "Commit: "		default	default
 color "Tagger: "		default	default
 color "Merge: "			default	default
