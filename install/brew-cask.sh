@@ -6,8 +6,6 @@ else
 brew tap caskroom/versions
 brew tap caskroom/cask
 brew tap caskroom/fonts
-brew tap d12frosted/emacs-plus
-
 # Install packages
 
 apps=(

@@ -44,6 +44,7 @@ values."
      autohotkey
      better-defaults
      colors
+     crystal
      docker
      elm
      emacs-lisp
@@ -65,7 +66,6 @@ values."
      nginx
      java
      javascript
-     itome-react
      (typescript :variables
                  typescript-fmt-tool 'typescript-formatter)
      (markdown :variables markdown-live-preview-engine 'vmd)
