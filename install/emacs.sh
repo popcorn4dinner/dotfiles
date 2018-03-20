@@ -7,4 +7,3 @@ brew cask install emacs
 # crystal layer
 git clone https://github.com/brantou/spacemacs-crystal-layer.git ~/.emacs.d/private/crystal
 
-# 

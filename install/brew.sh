@@ -20,6 +20,7 @@ apps=(
     awscli
     cairo
     composer
+    crystal-lang
     diff-so-fancy
     elm
     freetype
