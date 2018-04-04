@@ -20,11 +20,13 @@ apps=(
     awscli
     cairo
     composer
+    ctop
     crystal-lang
     diff-so-fancy
     elm
     freetype
     httpie
+    htop
     git
     go
     graphite2
