@@ -1,6 +1,7 @@
 # Tig configuration
 #
 # Please see 'man tigrc' for a complete reference.?
+set main-options = --all
 
 # Colors
 # ------
