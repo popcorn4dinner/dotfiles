@@ -38,4 +38,3 @@ brew cask install "${apps[@]}"
 brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize webpquicklook suspicious-package qlvideo
 
 brew cask cleanup
-fi
