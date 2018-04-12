@@ -1,4 +1,4 @@
-if [ -x "/usr/local/bin/brew" ] then
+if [ -x "/usr/local/bin/brew" ]; then
    "Homebrew not installed."
 else
 
