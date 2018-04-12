@@ -3,7 +3,7 @@ if ! [ -x "/usr/local/bin/brew" ]; then
 
 else
     echo "Installing software with Homebrew Cask..."
-else
+fi
 
 
 brew tap caskroom/versions
