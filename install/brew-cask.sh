@@ -1,5 +1,8 @@
-if [ -x "/usr/local/bin/brew" ]; then
-   "Homebrew not installed."
+if ! [ -x "/usr/local/bin/brew" ]; then
+   echo "Homebrew not installed."
+
+else
+    echo "Installing software with Homebrew Cask..."
 else
 
 
