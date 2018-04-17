@@ -439,7 +439,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (require 'phpcbf)
   (custom-set-variables
    '(phpcbf-executable "/usr/local/bin/phpcbf")
-   '(phpcbf-standard "PSR2"))
+   '(phpcbf-standard "PSR4"))
 
   ;; Auto format on save.
   (add-hook 'php-mode-hook 'phpcbf-enable-on-save)

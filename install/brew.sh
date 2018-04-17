@@ -32,6 +32,7 @@ apps=(
     graphite2
     graphviz
     imagemagick --with-webp
+    ispell --with-lang-en
     jpeg
     jq
     kubernetes-cli
