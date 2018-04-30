@@ -88,12 +88,12 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
-     alert
-     color-theme-solarized
-     all-the-icons
-     php-refactor-mode
-     phpcbf
      ac-inf-ruby
+     alert
+     all-the-icons
+     color-theme-solarized
+     drag-stuff
+     evil-string-inflection
      gnuplot
      company-inf-ruby
      company-tern
@@ -106,8 +106,9 @@ values."
      org-sticky-header
      org-super-agenda
      real-auto-save
-     evil-string-inflection
-     drag-stuff
+     php-refactor-mode
+     phpcbf
+     yasnippet-snippets
      wsd-mode
      )
    ;; A list of packages that cannot be updated.
@@ -283,7 +284,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -386,6 +387,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-set-key (kbd "s-M-<up>") 'drag-stuff-up)
   (global-set-key (kbd "s-M-<down>") 'drag-stuff-down)
 
+  (global-set-key (kbd "TAB") 'hippie-expand)
+
+
   (require 'evil-string-inflection)
   (define-key evil-normal-state-map "gR" 'evil-operator-string-inflection)
 
@@ -434,15 +438,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (require 'php-refactor-mode)
   (add-hook 'php-mode-hook 'php-refactor-mode)
 
-
   ;;; auto formatting
   (require 'phpcbf)
   (custom-set-variables
    '(phpcbf-executable "/usr/local/bin/phpcbf")
-   '(phpcbf-standard "PSR4"))
+   '(phpcbf-standard "PSR2"))
 
-  ;; Auto format on save.
-  (add-hook 'php-mode-hook 'phpcbf-enable-on-save)
+  ;; Auto format on mode change.
+  ;; (add-hook 'focus-out-hook 'phpcbf-enable-on-save)
 
   ;; Ruby
   (require 'ruby-refactor)
@@ -737,7 +740,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (inf-crystal wsd-mode play-crystal ob-crystal flycheck-crystal crystal-mode ameba yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-alert open-junk-file nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl js2-refactor js-doc indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-elm flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile all-the-icons ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell ac-inf-ruby)))
+    (yasnippet-snippets inf-crystal wsd-mode play-crystal ob-crystal flycheck-crystal crystal-mode ameba yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-alert open-junk-file nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl js2-refactor js-doc indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-elm flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile all-the-icons ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell ac-inf-ruby)))
  '(phpcbf-executable "/usr/local/bin/phpcbf")
  '(phpcbf-standard "PSR2"))
 (custom-set-faces
