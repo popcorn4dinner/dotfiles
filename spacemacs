@@ -387,8 +387,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-set-key (kbd "s-M-<up>") 'drag-stuff-up)
   (global-set-key (kbd "s-M-<down>") 'drag-stuff-down)
 
-  (global-set-key (kbd "TAB") 'hippie-expand)
-
 
   (require 'evil-string-inflection)
   (define-key evil-normal-state-map "gR" 'evil-operator-string-inflection)
