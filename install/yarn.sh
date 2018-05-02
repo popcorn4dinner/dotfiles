@@ -8,6 +8,7 @@ fi
 packages=(
     babel-eslint
     eslint
+    big-presentation
     eslint-plugin-react
     fkill-cli
     js-beautify
