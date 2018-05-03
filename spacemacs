@@ -65,13 +65,14 @@ values."
      html
      nginx
      java
-     javascript
+     (javascript :variables
+                 js2-basic-offset 2
+                 js-indent-level 2)
      (typescript :variables
                  typescript-fmt-tool 'typescript-formatter)
      (markdown :variables markdown-live-preview-engine 'vmd)
      php
      python
-     react
      ruby
      ruby-on-rails
      sql
@@ -92,24 +93,26 @@ values."
      alert
      all-the-icons
      color-theme-solarized
-     drag-stuff
-     evil-string-inflection
-     gnuplot
      company-inf-ruby
      company-tern
      company-terraform
-     ruby-refactor
+     drag-stuff
+     evil-string-inflection
+     gnuplot
      multiple-cursors
      org-alert
      org-bullets
      org-cliplink
      org-sticky-header
      org-super-agenda
-     real-auto-save
      php-refactor-mode
      phpcbf
-     yasnippet-snippets
+     real-auto-save
+     rjsx-mode
+     ruby-refactor
      wsd-mode
+     xref-js2
+     yasnippet-snippets
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -376,7 +379,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;; General
 
   (global-set-key (kbd "M-<right>") 'end-of-visual-line)
-  (global-set-key (kbd "M-<left>") 'beginning-of-visual-line)
+  (global-set-key (kbd "M-<left>")  'beginning-of-visual-line)
   (global-set-key (kbd "s-<right>") 'next-multiframe-window)
   (global-set-key (kbd "s-<left>") 'previous-multiframe-window)
 
@@ -409,27 +412,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-hook 'wsd-mode-hook 'company-mode)
   (setq wsd-style "napkin")
 
-  ;; javascript
-  (setq-default
-   ;; js2-mod
-   js2-basic-offset 2
-   js-indent-level 2
-   js-switch-indent-offset 2
-   ;; web-mode
-   css-indent-offset 2
-   web-mode-markup-indent-offset 2
-   web-mode-css-indent-offset 2
-   web-mode-code-indent-offset 2
-   web-mode-attr-indent-offset 2)
-
-  ;; typescript
-  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (when (string-equal "tsx" (file-name-extension buffer-file-name))
-                (setup-tide-mode))))
-  ;; enable typescript-tslint checker
-  (flycheck-add-mode 'typescript-tslint 'web-mode)
+  ;; JSX
+  (use-package rjsx-mode
+    :mode (("components\\/.*\\.js\\'" . rjsx-mode))
+    )
 
   ;; PHP
   ;;; refactor mode
@@ -738,7 +724,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (yasnippet-snippets inf-crystal wsd-mode play-crystal ob-crystal flycheck-crystal crystal-mode ameba yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-alert open-junk-file nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl js2-refactor js-doc indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-elm flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile all-the-icons ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell ac-inf-ruby)))
+    (skewer-mode simple-httpd xref-js2 yasnippet-snippets inf-crystal wsd-mode play-crystal ob-crystal flycheck-crystal crystal-mode ameba yapfify yaml-mode xterm-color ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-alert open-junk-file nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl js2-refactor js-doc indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-elm flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile all-the-icons ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell ac-inf-ruby)))
  '(phpcbf-executable "/usr/local/bin/phpcbf")
  '(phpcbf-standard "PSR2"))
 (custom-set-faces
