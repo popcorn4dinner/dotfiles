@@ -7,7 +7,6 @@ pyenv global 2.7
 # ruby versions
 eval "$(rbenv init -)"
 rbenv install 2.3.6
-rbenv install 2.4.3
 rbenv install 2.5.1
 rbenv global 2.5.1
 
