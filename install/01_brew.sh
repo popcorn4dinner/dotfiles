@@ -64,6 +64,7 @@ apps=(
     xz
     yarn
     zsh
+    zsh-completions
     zsh-history-substring-search
     zsh-syntax-highlighting
     z
