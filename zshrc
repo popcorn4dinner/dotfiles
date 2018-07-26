@@ -61,6 +61,7 @@ plugins=(
     docker-compose
     extract
     git
+    git-flow
     rbenv
     ruby
     npm
@@ -94,8 +95,8 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=10"
 eval "$(rbenv init -)"
 
 #pyenv - python version manager
-export PYENV_ROOT="$HOME/.pyenv
-export PATH="$PYENV_ROOT/bin:$PATH
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 

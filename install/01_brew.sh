@@ -6,9 +6,7 @@ fi
 echo "Installing dependencies with homebrew..."
 
 brew tap homebrew/core
-brew tap homebrew/php
 brew tap homebrew/services
-brew tap homebrew/versions
 
 brew update
 brew upgrade

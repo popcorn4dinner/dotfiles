@@ -8,14 +8,14 @@ for source in preferences/*; do
         if ! [ -L target ]
         then
             echo "creating backup of $target in .$target.bak"
-            mv ~/.$dotfile ~/.$dotfile.bak
+            mv ~/.$target ~/.$target.bak
         else
             echo "removing old link for $target"
-            rm target
+            rm $target
         fi
     fi
 
     echo "creating link for $target"
-    ln -s source target
+    ln -s $source $target
 done
 echo "linked all preferences."
