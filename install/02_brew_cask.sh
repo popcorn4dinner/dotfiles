@@ -16,8 +16,10 @@ apps=(
     docker
     emacs
     firefox
+    font-3270
     font-fira-code
     font-menlo-for-powerline
+    font-meslo-for-powerline
     srware-iron
     iterm2
     hammerspoon
