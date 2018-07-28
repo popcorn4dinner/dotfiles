@@ -31,4 +31,3 @@ done
 
 echo "all installers were executed."
 
-chsh -s /bin/zsh

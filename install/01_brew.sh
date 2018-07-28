@@ -15,6 +15,7 @@ brew upgrade
 
 apps=(
     ansible
+    antigen
     awscli
     cairo
     composer
