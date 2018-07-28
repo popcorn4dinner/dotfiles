@@ -100,6 +100,7 @@ values."
      drag-stuff
      evil-string-inflection
      gnuplot
+     helm-org-rifle
      multiple-cursors
      org-alert
      org-bullets
