@@ -20,6 +20,7 @@ apps=(
     font-fira-code
     font-menlo-for-powerline
     font-meslo-for-powerline
+    font-meslo-nerd-font
     srware-iron
     iterm2
     hammerspoon
