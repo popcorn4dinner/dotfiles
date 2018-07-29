@@ -13,6 +13,9 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "setting username"
 echo "export USERNAME='$(whoami)'" > ~/.username
+echo "setting dotfiles path"
+echo "export DOTFILES_PATH='$(pwd)'" > ~/.dotfiles
+
 
 echo "executing installers..."
 for script in install/*.sh; do

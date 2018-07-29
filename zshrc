@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# set dotfiles variables
+source $HOME/.dotfiles
+
 # aliases
 source $HOME/.aliases
 
@@ -12,14 +15,10 @@ export PATH="/usr/local/sbin:$PATH"
 # Activate z
 source "$(brew --prefix)/etc/profile.d/z.sh"
 
+# custom plugins
+source "$DOTFILES_PATH/zsh_plugins/warhol/warhol.plugin.zsh"
+source "$DOTFILES_PATH/zsh_plugins/zsh-iterm-touchbar/zsh-iterm-touchbar.plugin.zsh"
 
-# Antigen
-source $(brew --prefix)/share/antigen/antigen.zsh
-
-antigen bundle unixorn/warhol.plugin.zsh
-antigen bundle z
-
-antigen apply
 
 # Prompt configuration
 # Font mode for powerlevel9k
