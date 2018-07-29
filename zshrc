@@ -78,7 +78,17 @@ POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND='yellow'
 POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND='green'
 POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND='blue'
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status_joined context dir vcs user)
+prompt_empty() {
+    local ref
+    ref=$(command git symbolic-ref --quiet HEAD 2> /dev/null)
+    local ret=$?
+    if [[ $ret != 0 ]]; then
+        [[ $ret == 128 ]] && $1_prompt_segment "$0" "$2" "black" "yellow" ' \uf6d7' "#"
+        return
+    fi
+}
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status_joined context dir vcs empty)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 
 # Status
