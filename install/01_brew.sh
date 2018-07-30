@@ -6,6 +6,7 @@ fi
 echo "Installing dependencies with homebrew..."
 
 brew tap homebrew/core
+brew tap homebrew/command-not-found
 brew tap homebrew/services
 
 brew update
@@ -43,6 +44,7 @@ apps=(
     ncdu
     nettle
     node
+    nodenv
     openshift-cli
     openssl
     packer
