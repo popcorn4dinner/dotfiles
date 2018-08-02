@@ -107,8 +107,12 @@ fi
 
 # make composer bineries available PATH
 export PATH="$PATH:$HOME/.composer/vendor/bin"
+export PATH="$HOME/.gem:$PATH"
 
-#KEY BINDINGS 
+# disable annoying autocorrections
+unsetopt correct_all
+
+# KEY BINDINGS 
 zmodload zsh/terminfo
 
 zle -N history-substring-search-up
@@ -126,5 +130,4 @@ eval $(thefuck --alias)
 
 # # History search
 # source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-
 

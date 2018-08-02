@@ -20,14 +20,6 @@
 	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
-	<key>NSFontPanelAttributes</key>
-	<string>1, 0</string>
-	<key>NSNavLastRootDirectory</key>
-	<string>~/Projekte/dotfiles/preferences/iterm2</string>
-	<key>NSNavPanelExpandedSizeForOpenMode</key>
-	<string>{712, 448}</string>
-	<key>NSNavPanelExpandedSizeForSaveMode</key>
-	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -63,9 +55,8 @@
 	<dict>
 		<key>CurrentItems</key>
 		<array>
-			<string>NSTouchBarItemIdentifierFlexibleSpace</string>
-			<string>iTermTouchBarFunctionKeysScrollView</string>
 			<string>NSTouchBarItemIdentifierOtherItemsProxy</string>
+			<string>iTermTouchBarIdentifierFunctionKeys</string>
 		</array>
 		<key>DefaultItems</key>
 		<array>
@@ -80,18 +71,10 @@
 			<string>iTermTouchBarIdentifierNextMark</string>
 		</array>
 	</dict>
-	<key>NSWindow Frame NSFontPanel</key>
-	<string>257 206 735 420 0 0 1680 1050 </string>
-	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>530 492 620 392 0 0 1680 1027 </string>
-	<key>NSWindow Frame SessionsPreferences</key>
-	<string>269 143 606 469 0 0 1680 1050 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>59 456 918 492 0 0 1680 1050 </string>
+	<string>269 166 770 429 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>686 260 994 621 0 0 1680 1050 </string>
-	<key>NSWindow Frame iTerm Window 1</key>
-	<string>212 101 650 477 0 0 1680 1027 </string>
+	<string>780 370 650 477 0 0 1680 1050 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -730,15 +713,9 @@
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
-	<string>D8D5E3F3-049D-4FE7-A3F6-BFA6F4978160</string>
-	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
-	<true/>
-	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
-	<integer>0</integer>
-	<key>NoSyncPermissionToShowTip</key>
-	<false/>
+	<string>A440EAD2-B150-4A48-87F0-BCFBE90E7B95</string>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
-	<real>505217274.17567801</real>
+	<real>554887353.02184904</real>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -773,19 +750,17 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/bschnieders/Projekte/dotfiles/preferences/iterm2</string>
-	<key>SUAutomaticallyUpdate</key>
-	<false/>
+	<string>~/dotfiles/preferences/iterm2</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/final.xml?shard=76</string>
+	<string>https://iterm2.com/appcasts/final.xml?shard=13</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-07-28T15:29:56Z</date>
+	<date>2018-08-02T07:24:12Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -796,6 +771,8 @@
 	<integer>0</integer>
 	<key>TabViewType</key>
 	<integer>1</integer>
+	<key>WordCharacters</key>
+	<string>/-+\~_.</string>
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
