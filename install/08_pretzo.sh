@@ -18,3 +18,5 @@ ln -s ~/.zprezto/modules/prompt/external/powerlevel9k/powerlevel9k.zsh-theme ~/.
 # make zsh default shell
 chsh -s /bin/zsh
 
+git clone https://github.com/popcorn4dinner/zsh-iterm-touchbar.git "$DOTFILES_PATH/zsh_plugins/zsh-iterm-touchbar"
+got clone https://github.com/unixorn/warhol.plugin.zsh.git "$DOTFILES_PATH/zsh_plugins/warhol"
