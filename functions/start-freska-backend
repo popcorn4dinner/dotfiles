@@ -1,0 +1,85 @@
+#!/usr/bin/env sh
+
+print_help() {
+    echo "start-backend usage:"
+    echo " "
+    echo "options:"
+    echo "-h, --help                show brief help"
+    echo "-r, --reset               run reset script before starting app"
+    echo "-s, --setup               run setup script before starting app"
+    exit 0
+}
+
+verify_working_dir() {
+    local README="$(pwd)/README.md"
+    local PROJECT_TITLE="# Freska backend / API"
+
+    if [ -f $README ]; then
+        echo "Readme file found. Verifying Project name..."
+        local FIRST_LINE=$(head -n 1 "$README")
+        if [ "$FIRST_LINE" = "$PROJECT_TITLE" ]; then
+            echo "Project verified. Starting application..."
+        else
+            echo "Wrong project. Run this inside the Freska app folder."
+            exit 1
+        fi
+    else
+        echo "Wrong folder. Run this inside the Freska app folder."
+        exit 1
+    fi
+}
+
+start_backend() {
+    verify_working_dir
+
+    local command_prefix=${1-""}
+
+    osascript <<END
+  tell application "iTerm"
+      tell current window
+         create tab with default profile
+      end tell
+      tell first session of last tab of current window
+         split vertically with default profile
+         split horizontally with default profile
+      end tell
+      tell first session of last tab of current window
+         set name to "Sidekiq"
+         write text "bundle exec sidekiq"
+      end tell
+      tell second session of last tab of current window
+         set name to "Data Layer"
+         write text "docker-compose up"
+      end tell
+      tell third session of last tab of current window
+         set name to "Rails"
+         delay 3
+         write text "$command_prefix bundle exec rails s"
+      end tell
+  end tell
+END
+}
+
+while test $# -gt 0; do
+    case "$1" in
+        -h|--help)
+            print_help
+            ;;
+        -r|--reset)
+            start_backend "bin/reset &&"
+            exit 0
+            ;;
+        -s|--setup)
+            start_backend "bin/setup &&"
+            exit 0
+            ;;
+        *)
+            echo "$1 is not a recognized flag!"
+            return 1;
+            ;;
+    esac
+done
+
+start_backend
+
+
