@@ -108,6 +108,7 @@ fi
 # make composer bineries available PATH
 export PATH="$PATH:$HOME/.composer/vendor/bin"
 export PATH="$HOME/.gem:$PATH"
+export PATH="$DOTFILES_PATH/functions:$PATH"
 
 # disable annoying autocorrections
 unsetopt correct_all

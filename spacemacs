@@ -74,7 +74,7 @@ values."
      (markdown :variables markdown-live-preview-engine 'vmd)
      php
      python
-     ruby
+     (ruby :variables ruby-version-manager 'rbenv)
      ruby-on-rails
      sql
      swift
