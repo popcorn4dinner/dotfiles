@@ -20,3 +20,4 @@ chsh -s /bin/zsh
 
 git clone https://github.com/popcorn4dinner/zsh-iterm-touchbar.git "$DOTFILES_PATH/zsh_plugins/zsh-iterm-touchbar"
 got clone https://github.com/unixorn/warhol.plugin.zsh.git "$DOTFILES_PATH/zsh_plugins/warhol"
+

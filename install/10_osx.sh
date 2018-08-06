@@ -30,7 +30,7 @@ echo "expand save dialog by default"
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 
 echo "show the ~/Library folder in Finder"
-chflags nohidden ~/Library
+chflags nohidden ~/Library #stopped working with high sierra
 
 echo "Show icons for hard drives, servers, and removable media on the desktop"
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
