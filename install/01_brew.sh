@@ -61,6 +61,7 @@ apps=(
     tig
     tree
     thefuck
+    the_silver_searcher
     ttygif
     watchman
     wget

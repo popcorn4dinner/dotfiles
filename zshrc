@@ -19,6 +19,7 @@ source "$(brew --prefix)/etc/profile.d/z.sh"
 source "$DOTFILES_PATH/zsh_plugins/warhol/warhol.plugin.zsh"
 source "$DOTFILES_PATH/zsh_plugins/zsh-iterm-touchbar/zsh-iterm-touchbar.plugin.zsh"
 
+autoload -Uz compinit && compinit -i
 
 # Prompt configuration
 # Font mode for powerlevel9k

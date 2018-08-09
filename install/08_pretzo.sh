@@ -21,3 +21,8 @@ chsh -s /bin/zsh
 git clone https://github.com/popcorn4dinner/zsh-iterm-touchbar.git "$DOTFILES_PATH/zsh_plugins/zsh-iterm-touchbar"
 got clone https://github.com/unixorn/warhol.plugin.zsh.git "$DOTFILES_PATH/zsh_plugins/warhol"
 
+# docker completion
+ln -s /Applications/Docker.app/Contents/Resources/etc/docker.zsh-completion ~/.zprezto/modules/completion/external/src/_docker
+ln -s /Applications/Docker.app/Contents/Resources/etc/docker-machine.zsh-completion ~/.zprezto/modules/completion/external/src/_docker-machine
+ln -s /Applications/Docker.app/Contents/Resources/etc/docker-compose.zsh-completion ~/.zprezto/modules/completion/external/src/_docker-compose
+

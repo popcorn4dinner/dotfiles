@@ -46,7 +46,8 @@ zstyle ':prezto:load' pmodule \
   'python' \
   'node' \
   'ssh' \
-  'syntax-highlighting'
+  'syntax-highlighting' \
+  'docker'
 #
 # Autosuggestions
 #
