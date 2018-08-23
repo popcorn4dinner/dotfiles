@@ -126,10 +126,3 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 
 eval $(thefuck --alias)
 
-# #Syntax highlighting
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
-
-# # History search
-# source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-

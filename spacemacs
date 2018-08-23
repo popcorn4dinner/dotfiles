@@ -452,6 +452,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (require 'company-terraform)
   (company-terraform-init)
 
+  ;; Magit
+  (custom-set-faces  
+   '(magit-blame-highlight ((t (:foreground "#28998d" :background "#011d23"  :inherit t)))))
+
   ;; Autocomplete
   (global-company-mode t)
   (add-to-list 'company-backends 'company-tern)
@@ -654,23 +658,24 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq auto-save-interval 20)
 
   ;;Solarized theme
+  (setq powerline-default-separator 'slant)
   (setq theming-modifications
         '((solarized
            (header-line ((,class (:weight bold :underline "#320068" :overline "#320068" :foreground "#fffefe" :background "#00050e"))))
 
 
            ;;powerline
-           (mode-line :foreground "#002b36" :background "#585858" :inverse-video nil)
+           (mode-line :foreground "#002b36" :background "#1071c7" :inverse-video nil)
            (powerline-active :foreground "#002b36"  :inverse-video nil)
-           (powerline-active1 :foreground "#808080" :background "#002b36" :inverse-video nil)
-           (powerline-active2 :foreground "#808080" :background "#002b36" :inverse-video nil)
-           (mode-line-inactive :foreground "#808080" :background "#002b36" :inverse-video nil)
-           (powerline-inactive1 :foreground "#808080" :background "#002b36" :inverse-video nil)
-           (powerline-inactive2 :foreground "#808080" :background "#002b36" :inverse-video nil)
+           (powerline-active1 :background "#184854" :foreground "#00afaf" :inverse-video nil)
+           (powerline-active2 :background "#184854" :foreground "#00afaf" :inverse-video nil)
+           (mode-line-inactive :background "#184854" :foreground "#00afaf" :inverse-video nil)
+           (powerline-inactive1 :background "#184854" :foreground "#00afaf" :inverse-video nil)
+           (powerline-inactive2 :background "#184854" :foreground "#00afaf" :inverse-video nil)
            (org-pomodoro-mode-line :foreground "#5f8700" :weight bold :slant italic)
            (org-pomodoro-mode-line-break :foreground "#af005f" :weight bold :slant italic)
            ;; Make a really prominent helm selection line.
-           (helm-selection :foreground "#585858" :background "#5f8700" :inverse-video nil)
+           (helm-selection :foreground "#011d23" :background "#00afaf" :inverse-video nil)
            ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.
            (cursor :background "#b58900")
          )))
