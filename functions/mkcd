@@ -1,0 +1,4 @@
+#!/bin/bash
+# create directory and jump into it immediately
+
+mkdir -p "$@" && cd "$_"

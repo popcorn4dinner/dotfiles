@@ -1,0 +1,8 @@
+#! bin/sh
+
+let additional_message = ""
+if [ $# -eq 0 ]
+   additional_message = "- $*"
+fi
+
+git ci -am "squash! work in progress $additional_text"

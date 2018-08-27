@@ -19,86 +19,8 @@ source "$(brew --prefix)/etc/profile.d/z.sh"
 source "$DOTFILES_PATH/zsh_plugins/warhol/warhol.plugin.zsh"
 source "$DOTFILES_PATH/zsh_plugins/zsh-iterm-touchbar/zsh-iterm-touchbar.plugin.zsh"
 
-autoload -Uz compinit && compinit -i
-
-# Prompt configuration
-# Font mode for powerlevel9k
-POWERLEVEL9K_MODE="nerdfont-complete"
-
-# Separators
-POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR='\UE0B8'
-# POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=$'\ue231'
-POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\UE0BA'
-# POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=$'\ue0b7'
-
-# Context
-DEFAULT_USER=$USERNAME
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='cyan'
-# POWERLEVEL9K_CONTEXT_TEMPLATE="%F{cyan}%n%f"
-POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='black'
-
-# Dirs
-POWERLEVEL9K_DIR_HOME_BACKGROUND='blue'
-POWERLEVEL9K_DIR_HOME_FOREGROUND='black'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='blue'
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='black'
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='yellow'
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='black'
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
-
-# OS segment
-POWERLEVEL9K_OS_ICON_BACKGROUND='black'
-POWERLEVEL9K_LINUX_ICON='%F{cyan}\uf300 %F{white}arch%F{cyan}linux%f'
-
-# VCS icons
-POWERLEVEL9K_VCS_GIT_ICON=$''
-POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$''
-POWERLEVEL9K_VCS_STAGED_ICON=$'\uf055'
-POWERLEVEL9K_VCS_UNSTAGED_ICON=$'\uf421'
-POWERLEVEL9K_VCS_UNTRACKED_ICON=$'\uf00d'
-POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON=$'\uf0ab '
-POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON=$'\uf0aa '
-POWERLEVEL9K_VCS_BRANCH_ICON=$' \uF126 '
-
-# VCS colours
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='yellow'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='black'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='yellow'
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='black'
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='cyan'
-
-# VCS CONFIG
-POWERLEVEL9K_SHOW_CHANGESET=false
-
-# Battery
-POWERLEVEL9K_BATTERY_LOW_FOREGROUND='red'
-POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND='yellow'
-POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND='green'
-POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND='blue'
-
-prompt_empty() {
-    local ref
-    ref=$(command git symbolic-ref --quiet HEAD 2> /dev/null)
-    local ret=$?
-    if [[ $ret != 0 ]]; then
-        [[ $ret == 128 ]] && $1_prompt_segment "$0" "$2" "black" "yellow" ' \uf6d7' "#"
-        return
-    fi
-}
-
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status_joined context dir vcs empty)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-
-# Status
-POWERLEVEL9K_STATUS_VERBOSE=false
-POWERLEVEL9K_STATUS_OK_IN_NON_VERBOSE=true
-POWERLEVEL9K_STATUS_OK_FOREGROUND='cyan'
-POWERLEVEL9K_STATUS_ERROR_BACKGROUND='magenta'
-POWERLEVEL9K_STATUS_ERROR_FOREGROUND='black'
-POWERLEVEL9K_STATUS_CROSS=true
-
+#customize prompt
+source "$DOTFILES_PATH/prompt"
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -126,3 +48,8 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 
 eval $(thefuck --alias)
 
+# local overrides:
+
+[[ -f ~/.aliases.local ]] && source ~/.aliases.local
+[[ -f ~/.zshrc.local ]] && source ~/.aliases.local
+[[ -d ~/.functions.local ]] && export PATH="$HOME/.functions.local:$PATH"

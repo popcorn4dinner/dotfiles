@@ -12,25 +12,10 @@ alias la="ls -lha"
 # List only directories
 alias lsd='ls -l | grep "^d"'
 
-#mkdir and cd
-function mkcd() { mkdir -p "$@" && cd "$_"; }
+# Pretty print the path
+alias path='echo $PATH | tr -s ":" "\n"'
 
-# Load .env file into shell session for environment variables
-function envup() {
-    if [ -f .env ]; then
-        export $(sed '/^ *#/ d' .env)
-    else
-        echo 'No .env file found' 1>&2
-        return 1
-    fi
-}
-
-# git stuff
-function wip(){ git ci -am "squash! work in progress $@" }
-
-function fix(){ git ci -am "fixup! $@" }
-
-#Stepstone AWS login
+#AWS login
 alias aws-docker-login='eval $(aws ecr get-login --no-include-email --region eu-central-1 --profile saml)'
 alias aws-only-login='python ~/Projects/tools/awsAuthentication.py'
 
