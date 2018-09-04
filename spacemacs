@@ -406,6 +406,83 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;;; YaSnippet
   (spacemacs/set-leader-keys "ia" 'helm-yas-complete)
 
+  ;;; Company & Autocomplete
+  (defun check-expansion ()
+    (save-excursion
+      (if (looking-at "\\_>") t
+        (backward-char 1)
+        (if (looking-at "\\.") t
+          (backward-char 1)
+          (if (looking-at "->") t nil)))))
+
+  (defun do-yas-expand ()
+    (let ((yas/fallback-behavior 'return-nil))
+      (yas/expand)))
+
+  (defun tab-indent-or-complete ()
+    (interactive)
+    (cond
+     ((minibufferp)
+      (minibuffer-complete))
+     (t
+      (indent-for-tab-command)
+      (if (or (not yas/minor-mode)
+              (null (do-yas-expand)))
+          (if (check-expansion)
+              (progn
+                (company-manual-begin)
+                (if (null company-candidates)
+                    (progn
+                      (company-abort)
+                      (indent-for-tab-command)))))))))
+
+  (defun tab-complete-or-next-field ()
+    (interactive)
+    (if (or (not yas/minor-mode)
+            (null (do-yas-expand)))
+        (if company-candidates
+            (company-complete-selection)
+          (if (check-expansion)
+              (progn
+                (company-manual-begin)
+                (if (null company-candidates)
+                    (progn
+                      (company-abort)
+                      (yas-next-field))))
+            (yas-next-field)))))
+
+  (defun expand-snippet-or-complete-selection ()
+    (interactive)
+    (if (or (not yas/minor-mode)
+            (null (do-yas-expand))
+            (company-abort))
+        (company-complete-selection)))
+
+  (defun abort-company-or-yas ()
+    (interactive)
+    (if (null company-candidates)
+        (yas-abort-snippet)
+      (company-abort)))
+
+  (global-set-key [tab] 'tab-indent-or-complete)
+  (global-set-key (kbd "TAB") 'tab-indent-or-complete)
+  (global-set-key [(control return)] 'company-complete-common)
+
+  (eval-after-load "company"
+    '(progn
+       (define-key company-active-map [tab] 'expand-snippet-or-complete-selection)
+       (define-key company-active-map (kbd "TAB") 'expand-snippet-or-complete-selection)))
+  
+  (eval-after-load "yasnippet"
+    '(progn
+       (define-key yas-minor-mode-map [tab] nil)
+       (define-key yas-minor-mode-map (kbd "TAB") nil)
+
+       (define-key yas-keymap [tab] 'tab-complete-or-next-field)
+       (define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
+       (define-key yas-keymap [(control tab)] 'yas-next-field)
+       (define-key yas-keymap (kbd "C-g") 'abort-company-or-yas)))
+
   ;;; Markdown
   ;;;; live preview
   (spacemacs/set-leader-keys-for-major-mode 'emacs-markdown-mode "mp" 'markdown-live-preview-mode)
@@ -737,7 +814,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (org-mime yasnippet-snippets yapfify yaml-mode xterm-color xref-js2 wsd-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin play-crystal pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-download org-cliplink org-bullets org-alert open-junk-file ob-crystal nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode launchctl js2-refactor js-doc info+ inf-crystal indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-elm flycheck-crystal flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ameba all-the-icons ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell ac-inf-ruby))))
+    (editorconfig yasnippet-snippets yapfify yaml-mode xterm-color xref-js2 wsd-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin play-crystal pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-alert open-junk-file ob-crystal nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint launchctl js2-refactor js-doc inf-crystal indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-elm flycheck-crystal flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ameba all-the-icons ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-inf-ruby))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

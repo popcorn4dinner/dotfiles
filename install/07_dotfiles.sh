@@ -3,7 +3,7 @@ declare -a Dotfiles=(
     'functions'
     'jsbeautifyrc'
     'gitconfig'
-    'gitignore'
+    'gitignore_global'
     'spacemacs'
     'tigrc'
     'zshrc'

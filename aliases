@@ -15,6 +15,8 @@ alias lsd='ls -l | grep "^d"'
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
+alias -g take='| grep'
+
 #AWS login
 alias aws-docker-login='eval $(aws ecr get-login --no-include-email --region eu-central-1 --profile saml)'
 alias aws-only-login='python ~/Projects/tools/awsAuthentication.py'
