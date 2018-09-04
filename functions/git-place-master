@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# navigate where you want your new mater to be and run
+
+git branch -D master && git checkout -b master
