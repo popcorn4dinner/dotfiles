@@ -9,14 +9,12 @@ fi
 brew tap caskroom/versions
 brew tap caskroom/cask
 brew tap caskroom/fonts
-brew tap railwaycat/emacsmacport
 
 # Install packages
 
 apps=(
     cyberduck
     docker
-    emacs-mac
     firefox
     font-3270
     font-fira-code

@@ -75,6 +75,7 @@ values."
      php
      python
      (ruby :variables ruby-version-manager 'rbenv)
+     restclient
      ruby-on-rails
      sql
      swift
@@ -365,8 +366,6 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  (push '("melpa-stable" . "stable.melpa.org/packages/") configuration-layer--elpa-archives)
-  (push '(use-package . "melpa-stable") package-pinned-packages)
 
 
   ;; Sanity savers
@@ -377,6 +376,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 )
 (defun dotspacemacs/user-config ()
+
+  (with-eval-after-load 'tls
+    (add-to-list 'gnutls-trustfiles "/usr/local/etc/openssl/cert.pem")
+    (add-to-list 'gnutls-trustfiles "/usr/local/etc/libressl/cert.pem"))
+
   ;; Key bindings
   ;;; General
 
@@ -812,12 +816,31 @@ before packages are loaded. If you are unsure, you should try in setting them in
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (editorconfig yasnippet-snippets yapfify yaml-mode xterm-color xref-js2 wsd-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin play-crystal pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-alert open-junk-file ob-crystal nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint launchctl js2-refactor js-doc inf-crystal indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-elm flycheck-crystal flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ameba all-the-icons ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-inf-ruby))))
+    (restclient-helm ob-restclient company-restclient ac-ispell yasnippet-classic-snippets xelb restclient ob-http know-your-http-well editorconfig yasnippet-snippets yapfify yaml-mode xterm-color xref-js2 wsd-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin play-crystal pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-alert open-junk-file ob-crystal nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint launchctl js2-refactor js-doc inf-crystal indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-elm flycheck-crystal flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ameba all-the-icons ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-inf-ruby)))
+ '(phpcbf-executable "/usr/local/bin/phpcbf")
+ '(phpcbf-standard "PSR2"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
+ '(cursor ((t (:background "#b58900"))))
+ '(header-line ((t ((((\, class) (:weight bold :underline "#320068" :overline "#320068" :foreground "#fffefe" :background "#00050e")))))))
+ '(helm-selection ((t (:foreground "#011d23" :background "#00afaf" :inverse-video nil))))
+ '(magit-blame-highlight ((t (:foreground "#28998d" :background "#011d23" :inherit t))))
+ '(mode-line ((t (:foreground "#002b36" :background "#1071c7" :inverse-video nil))))
+ '(mode-line-inactive ((t (:background "#184854" :foreground "#00afaf" :inverse-video nil))))
+ '(org-pomodoro-mode-line ((t (:foreground "#5f8700" :weight bold :slant italic))))
+ '(org-pomodoro-mode-line-break ((t (:foreground "#af005f" :weight bold :slant italic))))
+ '(powerline-active ((t (:foreground "#002b36" :inverse-video nil))))
+ '(powerline-active1 ((t (:background "#184854" :foreground "#00afaf" :inverse-video nil))))
+ '(powerline-active2 ((t (:background "#184854" :foreground "#00afaf" :inverse-video nil))))
+ '(powerline-inactive1 ((t (:background "#184854" :foreground "#00afaf" :inverse-video nil))))
+ '(powerline-inactive2 ((t (:background "#184854" :foreground "#00afaf" :inverse-video nil)))))
