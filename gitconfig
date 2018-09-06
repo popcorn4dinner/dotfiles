@@ -21,6 +21,7 @@
 	unstage = reset HEAD --
 	last = log -1 HEAD
   tree = log --graph
+  undo = reset --hard
 [core]
 	autocrlf = input
   excludesfile = ~/.gitignore
