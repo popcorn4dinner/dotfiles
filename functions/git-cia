@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# commit everything known with convenient inline message
+
+git ci -am "$*"
