@@ -17,6 +17,9 @@ alias path='echo $PATH | tr -s ":" "\n"'
 
 alias -g take='| grep'
 
+#mkdir and cd
+function mkcd() { mkdir -p "$@" && cd "$_"; }
+
 #AWS login
 alias aws-docker-login='eval $(aws ecr get-login --no-include-email --region eu-central-1 --profile saml)'
 alias aws-only-login='python ~/Projects/tools/awsAuthentication.py'
