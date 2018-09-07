@@ -49,6 +49,7 @@ values."
      elm
      emacs-lisp
      emoji
+     elixir
      evil-commentary
      git
      (org :variables
@@ -73,6 +74,7 @@ values."
                  typescript-fmt-tool 'typescript-formatter)
      (markdown :variables markdown-live-preview-engine 'vmd)
      php
+     plantuml
      python
      (ruby :variables
            ruby-version-manager 'rbenv)
@@ -682,7 +684,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
       :config
       (progn
         (org-projectile-per-project)
-        (setq org-projectile-per-project-filepath "todos.org")
+        (setq org-projectile-per-project-filepath (lambda(path) (concat (projectile-project-name) ".org")))
         (push (org-projectile-project-todo-entry) org-capture-templates)
         ;; (setq org-agenda-files (append org-agenda-files (org-projectile-todo-files)))
       )
