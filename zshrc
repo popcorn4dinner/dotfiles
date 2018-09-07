@@ -1,16 +1,5 @@
 #!/bin/zsh
 
-# set dotfiles variables
-source $HOME/.dotfiles
-
-# aliases
-source $HOME/.aliases
-
-#export username available
-source $HOME/.username
-
-# pleaseing homebrew
-export PATH="/usr/local/sbin:$PATH"
 
 # Activate z
 source "$(brew --prefix)/etc/profile.d/z.sh"
@@ -27,12 +16,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-
-# make composer bineries available PATH
-export PATH="$PATH:$HOME/.composer/vendor/bin"
-export PATH="$HOME/.gem:$PATH"
-export PATH="$DOTFILES_PATH/functions:$PATH"
-
 # disable annoying autocorrections
 unsetopt correct_all
 
@@ -48,8 +31,3 @@ bindkey "$terminfo[kcud1]" history-substring-search-down
 
 eval $(thefuck --alias)
 
-# local overrides:
-
-[[ -f ~/.aliases.local ]] && source ~/.aliases.local
-[[ -f ~/.zshrc.local ]] && source ~/.aliases.local
-[[ -d ~/.functions.local ]] && export PATH="$HOME/.functions.local:$PATH"

@@ -6,6 +6,7 @@ declare -a Dotfiles=(
     'gitignore_global'
     'spacemacs'
     'tigrc'
+    'zshenv'
     'zshrc'
     'zpreztorc'
 )
