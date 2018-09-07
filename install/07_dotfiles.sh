@@ -4,6 +4,7 @@ declare -a Dotfiles=(
     'jsbeautifyrc'
     'gitconfig'
     'gitignore_global'
+    'gemrc'
     'spacemacs'
     'tigrc'
     'zshenv'
