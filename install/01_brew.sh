@@ -53,6 +53,7 @@ apps=(
     php72
     php-code-sniffer
     phpunit
+    plantuml
     python
     pyenv
     readline

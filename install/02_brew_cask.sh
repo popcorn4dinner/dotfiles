@@ -25,6 +25,7 @@ apps=(
     iterm2
     hammerspoon
     kaleidoscope
+    java
     macdown
     meld
     postman
