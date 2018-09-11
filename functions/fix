@@ -1,8 +1,8 @@
-#! bin/sh
+#!/usr/bin/env bash
 
-let additional_message = ""
-if [ $# -eq 0 ]
-   additional_message = "- $*"
+additional_message=""
+if [ $# -eq 0 ]; then
+    additional_message="- $*"
 fi
 
 git ci -am "fixup! work in progress $additional_text"

@@ -604,6 +604,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
     (setq org-reveal-mathjax t)
 
+  ;;; plantuml
+    (setq org-plantuml-jar-path "/Users/bastian/plantuml.jar")
+
   ;;; Todo sequence
     (setq org-todo-keywords
           '(
