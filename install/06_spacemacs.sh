@@ -1,8 +1,8 @@
 #!/bin/bash
 
-brew tap d12frosted/emacs-plus
+brew tap railwaycat/emacsmacport
 
-brew cask install emacs
+brew install emacs-mac
 
 # git clone https://gitlab.com/popcorn4dinner/emacs.d.git ~/.emacs.d
 

@@ -8,7 +8,6 @@ echo "Installing dependencies with homebrew..."
 brew tap homebrew/core
 brew tap homebrew/command-not-found
 brew tap homebrew/services
-brew tap railwaycat/emacsmacport
 
 brew update
 brew upgrade
@@ -25,7 +24,6 @@ apps=(
     crystal-lang
     diff-so-fancy
     elm
-    emacs-mac
     freetype
     httpie
     htop
