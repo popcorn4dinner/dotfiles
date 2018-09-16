@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# commit everything known with convenient inline message
+SEARCHSTRING="$*"
+
+git log -S"$SEARCHSTRING" -p --reverse --color| grep "$SEARCHSTRING" -C4
