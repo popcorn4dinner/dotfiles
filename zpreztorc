@@ -10,7 +10,7 @@
 #
 
 # Set case-sensitivity for completion, history lookup, etc.
-# zstyle ':prezto:*:*' case-sensitive 'yes'
+zstyle ':prezto:*:*' case-sensitive 'no'
 
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
@@ -42,18 +42,21 @@ zstyle ':prezto:load' pmodule \
   'helper' \
   'git' \
   'command-not-found' \
+  'syntax-highlighting' \
+  'autosuggestions'\
   'ruby' \
   'python' \
   'node' \
   'ssh' \
-  'syntax-highlighting' \
-  'docker'
+  'docker' \
+  'utility'
 #
 # Autosuggestions
 #
 
 # Set the query found color.
-# zstyle ':prezto:module:autosuggestions:color' found ''
+zstyle ':prezto:module:autosuggestions:color' found ''
+zstyle ':prezto:module:autosuggestions' color 'yes'
 
 #
 # Completions
@@ -82,7 +85,8 @@ zstyle ':prezto:module:editor' ps-context 'yes'
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
 # zstyle ':prezto:module:git:status:ignore' submodules 'all'
-zstyle ':prezto:module:git:alias' skip 'yes'
+zstyle ':prezto:module:git:alias' skip 'no'
+
 
 
 #

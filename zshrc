@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-
 # Activate z
 source "$(brew --prefix)/etc/profile.d/z.sh"
 
@@ -18,6 +17,7 @@ fi
 
 # disable annoying autocorrections
 unsetopt correct_all
+unsetopt nomatch
 
 # KEY BINDINGS 
 zmodload zsh/terminfo

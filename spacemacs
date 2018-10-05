@@ -77,7 +77,7 @@ values."
      python
      (ruby :variables
            ruby-version-manager 'rbenv)
-     (restclient :variables 'restclient-use-org t)
+     (restclient :variables restclient-use-org t)
      ruby-on-rails
      sql
      swift
@@ -414,6 +414,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/set-leader-keys "ia" 'helm-yas-complete)
 
   ;;; Company & Autocomplete
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "<return>") nil)
+    (define-key company-active-map (kbd "RET") nil)
+    (define-key company-active-map (kbd "C-SPC") #'company-complete-selection))
+
   (defun check-expansion ()
     (save-excursion
       (if (looking-at "\\_>") t
@@ -586,7 +591,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Org-mode
   (with-eval-after-load 'org
+    
+    (defun unauthorized-org-babel-languages (lang body)
+      (not (member lang '("plantuml" "wsd"))))
 
+    (setq org-confirm-babel-evaluate 'unauthorized-org-babel-languages)
   ;;; activate shift select in org buffers
     (setq org-support-shift-select t)
 
@@ -604,7 +613,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (use-package ox-reveal
       :ensure ox-reveal)
 
-    (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+    (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0")
     (setq org-reveal-mathjax t)
 
   ;;; plantuml

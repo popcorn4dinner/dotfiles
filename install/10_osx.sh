@@ -69,6 +69,9 @@ defaults write com.apple.finder NSUserKeyEquivalents ' {
         "Tags..." = "@~t";
 }'
 
+echo "activate hold for umlaut"
+defaults write -g ApplePressAndHoldEnabled -bool true
+
 echo "=============================="
 echo "Kill affected applications"
 for app in Safari Finder Dock Mail SystemUIServer; do killall "$app" >/dev/null 2>&1; done

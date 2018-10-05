@@ -16,3 +16,4 @@ git clone https://github.com/popcorn4dinner/trello-org-spacemacs-layer.git ~/.em
 
 # Create emacs link in applications folder
 ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications
+
