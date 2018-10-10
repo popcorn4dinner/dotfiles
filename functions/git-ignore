@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+join() { local IFS="$1"; shift; echo "$*"; }
+
+create_gitignore() {
+ local languages=$(join , ${@})
+
+  curl -L -s "https://www.gitignore.io/api/$languages" >> .gitignore
+  echo -e '#rest client files\n*.http' >> .girignore
+}
+
+print_help() {
+  echo "usage: git ignore <language 1> <language 2> <language 3>"
+  echo "example: git ignore ruby javascript"
+}
+
+main() {
+  if [ $# -eq 0 ]; then
+     print_help
+     exit 1
+  fi
+
+  if [ -f ./.gitignore ]; then
+    echo "Existing .gitignore file found. Please remove it before proceeding."
+    exit
+  else
+    create_gitignore "$@"
+  fi
+}
+
+main "$@"
