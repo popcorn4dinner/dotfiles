@@ -6,7 +6,7 @@ create_gitignore() {
  local languages=$(join , ${@})
 
   curl -L -s "https://www.gitignore.io/api/$languages" >> .gitignore
-  echo -e '#rest client files\n*.http' >> .girignore
+  echo -e '#rest client files\n*.http' >> .gitignore
 }
 
 print_help() {
