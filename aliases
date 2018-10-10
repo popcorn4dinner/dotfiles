@@ -28,3 +28,5 @@ aws-login(){ aws-only-login $1; aws-docker-login }
 
 # emacs
 alias emacs-mac='open -a /Applications/Emacs.app --args '
+
+alias resolve-lock-file="git co master -- Gemfile.lock && bundle install && git add Gemfile.lock"

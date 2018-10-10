@@ -32,7 +32,6 @@
 	autosquash = true
 [merge]
   tool = meld
-  conflictstyle = diff3
 [mergetool]
   prompt = false
 [mergetool "meld"]
