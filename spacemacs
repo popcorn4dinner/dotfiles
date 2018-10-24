@@ -83,7 +83,6 @@ values."
      swift
      osx
      terraform
-     trello
      theming
      typescript
      yaml
@@ -102,7 +101,6 @@ values."
      company-tern
      company-terraform
      drag-stuff
-     evil-string-inflection
      gnuplot
      helm-org-rifle
      multiple-cursors
@@ -115,10 +113,8 @@ values."
      phpcbf
      real-auto-save
      rjsx-mode
-     ruby-refactor
      wsd-mode
      xref-js2
-     yasnippet-snippets
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -191,8 +187,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(solarized-dark)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -386,7 +381,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Key bindings
   ;;; General
-
+  (global-set-key (kbd "C-/") 'comment-line)
   (global-set-key (kbd "M-<right>") 'end-of-visual-line)
   (global-set-key (kbd "M-<left>")  'beginning-of-visual-line)
   (global-set-key (kbd "s-<right>") 'next-multiframe-window)
@@ -399,9 +394,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-set-key (kbd "s-M-<up>") 'drag-stuff-up)
   (global-set-key (kbd "s-M-<down>") 'drag-stuff-down)
 
-
-  (require 'evil-string-inflection)
-  (define-key evil-normal-state-map "gR" 'evil-operator-string-inflection)
 
   ;;;; find usages
   (spacemacs/set-leader-keys "pu" 'helm-projectile-ag)
@@ -493,7 +485,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
        (define-key yas-keymap [tab] 'tab-complete-or-next-field)
        (define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
        (define-key yas-keymap [(control tab)] 'yas-next-field)
-       (define-key yas-keymap (kbd "C-g") 'abort-company-or-yas)))
+       (define-key yas-keymap (kbd "C-g") 'abort-company-or-yas))) 
 
   ;;; Markdown
   ;;;; live preview
@@ -527,15 +519,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (custom-set-variables
    '(phpcbf-executable "/usr/local/bin/phpcbf")
    '(phpcbf-standard "PSR2"))
-
-  ;; Auto format on mode change.
-  ;; (add-hook 'focus-out-hook 'phpcbf-enable-on-save)
-
-  ;; Ruby
-  (require 'ruby-refactor)
-  (add-hook 'ruby-mode-hook 'ruby-refactor-mode-launch)
-  (eval-after-load 'company
-    '(add-to-list 'company-backends 'company-inf-ruby))
 
   ;; Terraform
   (require 'company-terraform)
@@ -587,7 +570,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  (global-set-key (kbd "C-c C->") 'mc/mark-all-like-this)
 
   ;; Org-mode
   (with-eval-after-load 'org
@@ -760,17 +743,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq powerline-default-separator 'slant)
   (setq theming-modifications
         '((solarized
-           (header-line ((,class (:weight bold :underline "#320068" :overline "#320068" :foreground "#fffefe" :background "#00050e"))))
-
-
            ;;powerline
            (mode-line :foreground "#002b36" :background "#1071c7" :inverse-video nil)
-           (powerline-active :foreground "#002b36"  :inverse-video nil)
-           (powerline-active1 :background "#184854" :foreground "#00afaf" :inverse-video nil)
-           (powerline-active2 :background "#184854" :foreground "#00afaf" :inverse-video nil)
-           (mode-line-inactive :background "#184854" :foreground "#00afaf" :inverse-video nil)
            (powerline-inactive1 :background "#184854" :foreground "#00afaf" :inverse-video nil)
            (powerline-inactive2 :background "#184854" :foreground "#00afaf" :inverse-video nil)
+           ;;promodoro
            (org-pomodoro-mode-line :foreground "#5f8700" :weight bold :slant italic)
            (org-pomodoro-mode-line-break :foreground "#af005f" :weight bold :slant italic)
            ;; Make a really prominent helm selection line.
@@ -829,38 +806,3 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (yasnippet-snippets yapfify yaml-mode xterm-color xref-js2 wsd-mode ws-butler winum web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen unfill toc-org tide typescript-mode tagedit symon swift-mode sql-indent spaceline-all-the-icons spaceline powerline smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restclient-helm restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails rake inflections prettier-js popwin play-crystal plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode password-generator paradox spinner ox-reveal ox-gfm overseer osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref pdf-tools key-chord org-projectile org-category-capture org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain org-alert open-junk-file ob-restclient ob-http ob-elixir ob-crystal nginx-mode neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc markdown-mode magit-svn magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode live-py-mode link-hint launchctl json-navigator hierarchy js2-refactor multiple-cursors js2-mode js-doc inf-crystal indent-guide importmagic epc ctable concurrent deferred impatient-mode simple-httpd hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose window-purpose imenu-list helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore request helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-bibtex parsebib helm-ag haml-mode groovy-mode groovy-imports pcache gradle-mode google-translate golden-ratio gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck-mix flycheck-elm flycheck-crystal flycheck-credo flycheck flx-ido flx fill-column-indicator feature-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection string-inflection evil-org evil-numbers evil-mc evil-matchit evil-magit magit git-commit ghub with-editor evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu highlight eshell-z eshell-prompt-extras esh-help ensime sbt-mode scala-mode emojify ht emoji-cheat-sheet-plus emmet-mode elm-test-runner elm-mode elisp-slime-nav editorconfig dumb-jump drupal-mode drag-stuff doom-modeline eldoc-eval shrink-path dockerfile-mode docker json-mode tablist magit-popup docker-tramp json-snatcher json-reformat diff-hl deft cython-mode crystal-mode counsel-projectile projectile counsel swiper ivy company-web web-completion-data company-terraform terraform-mode hcl-mode company-tern dash-functional tern company-statistics company-restclient restclient know-your-http-well company-php ac-php-core xcscope php-mode company-inf-ruby company-emoji company-emacs-eclim eclim company-anaconda column-enforce-mode color-theme-solarized color-theme color-identifiers-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote biblio biblio-core auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed anaconda-mode pythonic f ameba all-the-icons memoize alert log4e gntp alchemist s company dash elixir-mode pkg-info epl ahk-mode aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core ac-ispell ac-inf-ruby auto-complete inf-ruby popup which-key use-package pcre2el org-plus-contrib hydra font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-trello-current-prefix-keybinding "C-c o")
- '(package-selected-packages
-   (quote
-    (play-crystal org-trello request-deferred deferred ob-crystal inf-crystal flycheck-crystal crystal-mode ameba yasnippet-snippets yapfify yaml-mode xterm-color xref-js2 wsd-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit swift-mode sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restclient-helm restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin plantuml-mode pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode pbcopy paradox ox-reveal ox-gfm osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-alert open-junk-file ob-restclient ob-http ob-elixir nginx-mode neotree mwim multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint launchctl js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-elm flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-string-inflection evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emoji-cheat-sheet-plus emmet-mode elm-mode elisp-slime-nav dumb-jump drupal-mode drag-stuff dockerfile-mode docker diff-hl deft cython-mode company-web company-terraform company-tern company-statistics company-restclient company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode coffee-mode clean-aindent-mode chruby bundler auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile all-the-icons alchemist ahk-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell ac-inf-ruby))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
