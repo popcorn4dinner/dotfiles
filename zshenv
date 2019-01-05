@@ -1,3 +1,5 @@
+export TERM="xterm-256color"
+
 # set dotfiles variables
 source $HOME/.dotfiles
 
