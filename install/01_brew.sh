@@ -60,6 +60,7 @@ apps=(
     sqlite
     terraform
     tig
+    trash
     tree
     thefuck
     the_silver_searcher

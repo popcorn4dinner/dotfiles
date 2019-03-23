@@ -43,8 +43,10 @@ values."
                       )
      autohotkey
      better-defaults
+     bibtex
      colors
      crystal
+     deft
      docker
      elm
      emacs-lisp
@@ -52,39 +54,41 @@ values."
      elixir
      evil-commentary
      git
-     (org :variables
-          org-enable-reveal-js-support t)
-     deft
-     bibtex
-     (shell :variables
-             shell-default-height 30
-             shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
-     version-control
      html
-     nginx
      java
      (javascript :variables
                  js2-basic-offset 2
                  js-indent-level 2
                  js-switch-indent-offset 2)
-     (typescript :variables
-                 typescript-fmt-tool 'typescript-formatter)
      (markdown :variables markdown-live-preview-engine 'vmd)
+     json
+     neotree
+     nginx
+     (org :variables
+          org-enable-reveal-js-support t)
+     osx
      php
      plantuml
      python
      (ruby :variables
-           ruby-version-manager 'rbenv)
+           ruby-test-runner 'rspec
+           ruby-version-manager 'rbenv
+           )
      (restclient :variables restclient-use-org t)
      ruby-on-rails
+     (shell :variables
+             shell-default-height 30
+             shell-default-position 'bottom)
      sql
+     spell-checking
+     syntax-checking
      swift
-     osx
      terraform
      theming
-     typescript
+     (typescript :variables
+                 typescript-fmt-tool 'typescript-formatter)
+     version-control
+     web-beautify
      yaml
      )
    ;; List of additional packages C-S-cthat will be installed without being
@@ -406,86 +410,86 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/set-leader-keys "ia" 'helm-yas-complete)
 
   ;;; Company & Autocomplete
-  ;;  (with-eval-after-load 'company
-  ;;   (define-key company-active-map (kbd "<return>") nil)
-  ;;   (define-key company-active-map (kbd "RET") nil)
-  ;;   (define-key company-active-map (kbd "C-SPC") #'company-complete-selection))
+  (with-eval-after-load 'company
+    (define-key company-active-map (kbd "<return>") nil)
+    (define-key company-active-map (kbd "RET") nil)
+    (define-key company-active-map (kbd "C-SPC") #'company-complete-selection))
 
-  ;; (defun check-expansion ()
-  ;;   (save-excursion
-  ;;     (if (looking-at "\\_>") t
-  ;;       (backward-char 1)
-  ;;       (if (looking-at "\\.") t
-  ;;         (backward-char 1)
-  ;;         (if (looking-at "->") t nil)))))
+  (defun check-expansion ()
+    (save-excursion
+      (if (looking-at "\\_>") t
+        (backward-char 1)
+        (if (looking-at "\\.") t
+          (backward-char 1)
+          (if (looking-at "->") t nil)))))
 
-  ;; (defun do-yas-expand ()
-  ;;   (let ((yas/fallback-behavior 'return-nil))
-  ;;     (yas/expand)))
+  (defun do-yas-expand ()
+    (let ((yas/fallback-behavior 'return-nil))
+      (yas/expand)))
 
-  ;; (defun tab-indent-or-complete ()
-  ;;   (interactive)
-  ;;   (cond
-  ;;    ((minibufferp)
-  ;;     (minibuffer-complete))
-  ;;    (t
-  ;;     (indent-for-tab-command)
-  ;;     (if (or (not yas/minor-mode)
-  ;;             (null (do-yas-expand)))
-  ;;         (if (check-expansion)
-  ;;             (progn
-  ;;               (company-manual-begin)
-  ;;               (if (null company-candidates)
-  ;;                   (progn
-  ;;                     (company-abort)
-  ;;                     (indent-for-tab-command)))))))))
+  (defun tab-indent-or-complete ()
+    (interactive)
+    (cond
+     ((minibufferp)
+      (minibuffer-complete))
+     (t
+      (indent-for-tab-command)
+      (if (or (not yas/minor-mode)
+              (null (do-yas-expand)))
+          (if (check-expansion)
+              (progn
+                (company-manual-begin)
+                (if (null company-candidates)
+                    (progn
+                      (company-abort)
+                      (indent-for-tab-command)))))))))
 
-  ;; (defun tab-complete-or-next-field ()
-  ;;   (interactive)
-  ;;   (if (or (not yas/minor-mode)
-  ;;           (null (do-yas-expand)))
-  ;;       (if company-candidates
-  ;;           (company-complete-selection)
-  ;;         (if (check-expansion)
-  ;;             (progn
-  ;;               (company-manual-begin)
-  ;;               (if (null company-candidates)
-  ;;                   (progn
-  ;;                     (company-abort)
-  ;;                     (yas-next-field))))
-  ;;           (yas-next-field)))))
+  (defun tab-complete-or-next-field ()
+    (interactive)
+    (if (or (not yas/minor-mode)
+            (null (do-yas-expand)))
+        (if company-candidates
+            (company-complete-selection)
+          (if (check-expansion)
+              (progn
+                (company-manual-begin)
+                (if (null company-candidates)
+                    (progn
+                      (company-abort)
+                      (yas-next-field))))
+            (yas-next-field)))))
 
-  ;; (defun expand-snippet-or-complete-selection ()
-  ;;   (interactive)
-  ;;   (if (or (not yas/minor-mode)
-  ;;           (null (do-yas-expand))
-  ;;           (company-abort))
-  ;;       (company-complete-selection)))
+  (defun expand-snippet-or-complete-selection ()
+    (interactive)
+    (if (or (not yas/minor-mode)
+            (null (do-yas-expand))
+            (company-abort))
+        (company-complete-selection)))
 
-  ;; (defun abort-company-or-yas ()
-  ;;   (interactive)
-  ;;   (if (null company-candidates)
-  ;;       (yas-abort-snippet)
-  ;;     (company-abort)))
+  (defun abort-company-or-yas ()
+    (interactive)
+    (if (null company-candidates)
+        (yas-abort-snippet)
+      (company-abort)))
 
-  ;; (global-set-key [tab] 'tab-indent-or-complete)
-  ;; (global-set-key (kbd "TAB") 'tab-indent-or-complete)
-  ;; (global-set-key [(control return)] 'company-complete-common)
+  (global-set-key [tab] 'tab-indent-or-complete)
+  (global-set-key (kbd "TAB") 'tab-indent-or-complete)
+  (global-set-key [(control return)] 'company-complete-common)
 
-  ;; (eval-after-load "company"
-  ;;   '(progn
-  ;;      (define-key company-active-map [tab] 'expand-snippet-or-complete-selection)
-  ;;      (define-key company-active-map (kbd "TAB") 'expand-snippet-or-complete-selection)))
+  (eval-after-load "company"
+    '(progn
+       (define-key company-active-map [tab] 'expand-snippet-or-complete-selection)
+       (define-key company-active-map (kbd "TAB") 'expand-snippet-or-complete-selection)))
   
-  ;; (eval-after-load "yasnippet"
-  ;;   '(progn
-  ;;      (define-key yas-minor-mode-map [tab] nil)
-  ;;      (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (eval-after-load "yasnippet"
+    '(progn
+       (define-key yas-minor-mode-map [tab] nil)
+       (define-key yas-minor-mode-map (kbd "TAB") nil)
 
-  ;;      (define-key yas-keymap [tab] 'tab-complete-or-next-field)
-  ;;      (define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
-  ;;      (define-key yas-keymap [(control tab)] 'yas-next-field)
-  ;;      (define-key yas-keymap (kbd "C-g") 'abort-company-or-yas))) 
+       (define-key yas-keymap [tab] 'tab-complete-or-next-field)
+       (define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
+       (define-key yas-keymap [(control tab)] 'yas-next-field)
+       (define-key yas-keymap (kbd "C-g") 'abort-company-or-yas))) 
 
   ;;; Markdown
   ;;;; live preview
@@ -497,7 +501,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; JSX
   (use-package rjsx-mode
-    :mode (("components\\/.*\\.js\\'" . rjsx-mode))
+    :mode (("*.js" . rjsx-mode))
     )
 
    ;; web-mode
@@ -539,30 +543,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
    '(company-tooltip-common-selection
      ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
 
-  ;; Alert
-  (use-package alert
-    :defer t
-    :config
-    (progn
-      (defun alert-notifier-notify (info)
-        (if alert-notifier-command
-            (let ((args
-                   (list "-title"   (alert-encode-string (plist-get info :title))
-                         "-activate" "org.gnu.Emacs"
-                         "-message" (alert-encode-string (plist-get info :message))
-                         "-execute" (format "\"%s\"" (switch-to-buffer-command (plist-get info :buffer))))))
-              (apply #'call-process alert-notifier-command nil nil nil args))
-          (alert-message-notify info)))
-
-      (defun switch-to-buffer-command (buffer-name)
-        (emacsclient-command (format "(switch-to-buffer \\\"%s\\\")" buffer-name)))
-
-      (defun emacsclient-command (command)
-        (format "emacsclient --server-file='%s' -e '%s'" server-name command))
-
-      (setq alert-default-style 'osx-notifier)))
-
-  ;; NeoTree
+    ;; NeoTree
   (setq neo-theme 'icons)
 
   ;; Multiple Cursers
@@ -736,8 +717,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; Autosave
   (require 'real-auto-save)
   (add-hook 'prog-mode-hook 'real-auto-save-mode)
-  (add-hook 'yaml-mode-hook 'real-auto-save-mode)
-  
   (setq real-auto-save-interval 5) ;; in seconds
   (setq auto-save-interval 20)
 
@@ -808,23 +787,3 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (writeroom-mode visual-fill-column yasnippet-snippets yapfify yaml-mode xterm-color xref-js2 wsd-mode ws-butler winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tagedit symon swift-mode string-inflection sql-indent spaceline-all-the-icons solarized-theme smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restclient-helm restart-emacs real-auto-save rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails prettier-js popwin play-crystal plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-refactor-mode php-extras php-auto-yasnippets persp-mode password-generator paradox ox-reveal overseer osx-trash osx-dictionary orgit org-super-agenda org-sticky-header org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain org-alert open-junk-file ob-restclient ob-http ob-elixir ob-crystal nginx-mode neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc inf-crystal indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag groovy-mode groovy-imports gradle-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-mix flycheck-elm flycheck-crystal flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ensime emojify emoji-cheat-sheet-plus emmet-mode elm-test-runner elm-mode elisp-slime-nav editorconfig dumb-jump drupal-mode drag-stuff dotenv-mode doom-modeline dockerfile-mode docker diminish diff-hl deft cython-mode counsel-projectile company-web company-terraform company-tern company-statistics company-restclient company-php company-inf-ruby company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-theme-solarized color-identifiers-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ameba alchemist ahk-mode aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell ac-inf-ruby))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-)

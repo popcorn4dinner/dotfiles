@@ -21,6 +21,14 @@ export PATH="$HOME/.gem:$PATH"
 # custom scripts within dotfiles
 export PATH="$DOTFILES_PATH/functions:$PATH"
 
+#for global, gtags, ...
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/sqlite/lib/pkgconfig"
+export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+
+
 # local overrides:
 
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
