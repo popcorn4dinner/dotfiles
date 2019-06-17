@@ -30,7 +30,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(vimscript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -47,6 +47,7 @@ values."
      colors
      crystal
      deft
+     dart
      docker
      elm
      emacs-lisp
@@ -60,8 +61,9 @@ values."
                  js2-basic-offset 2
                  js-indent-level 2
                  js-switch-indent-offset 2)
-     (markdown :variables markdown-live-preview-engine 'vmd)
      json
+     (markdown :variables markdown-live-preview-engine 'vmd)
+     multiple-cursors
      neotree
      nginx
      (org :variables
@@ -70,6 +72,7 @@ values."
      php
      plantuml
      python
+     react
      (ruby :variables
            ruby-test-runner 'rspec
            ruby-version-manager 'rbenv
@@ -85,6 +88,7 @@ values."
      swift
      terraform
      theming
+     themes-megapack
      (typescript :variables
                  typescript-fmt-tool 'typescript-formatter)
      version-control
@@ -97,8 +101,6 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(
-     ac-inf-ruby
-     alert
      all-the-icons
      color-theme-solarized
      company-inf-ruby
@@ -108,15 +110,13 @@ values."
      gnuplot
      helm-org-rifle
      multiple-cursors
-     org-alert
      org-bullets
      org-cliplink
      org-sticky-header
      org-super-agenda
      php-refactor-mode
      phpcbf
-     real-auto-save
-     rjsx-mode
+     super-save
      wsd-mode
      xref-js2
      )
@@ -191,7 +191,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-dark)
+   dotspacemacs-themes '(solarized-dark spacemacs)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -375,7 +375,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
   (setq auto-save-list-file-prefix temporary-file-directory)
-
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 )
 (defun dotspacemacs/user-config ()
 
@@ -398,6 +398,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-set-key (kbd "H-M-<up>") 'drag-stuff-up)
   (global-set-key (kbd "H-M-<down>") 'drag-stuff-down)
 
+  ;;;; invert split window behavior
+  (spacemacs/set-leader-keys "w/" 'split-window-right-and-focus)
+  (spacemacs/set-leader-keys "wv" 'split-window-right-and-focus)
+  (spacemacs/set-leader-keys "wV" 'split-window-right)
+
+  (spacemacs/set-leader-keys "w-" 'split-window-below-and-focus)
+  (spacemacs/set-leader-keys "wv" 'split-window-below-and-focus)
+  (spacemacs/set-leader-keys "wV" 'split-window-below)
 
   ;;;; find usages
   (spacemacs/set-leader-keys "pu" 'helm-projectile-ag)
@@ -409,89 +417,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;;;; YaSnippet
   (spacemacs/set-leader-keys "ia" 'helm-yas-complete)
 
-  ;;; Company & Autocomplete
-  (with-eval-after-load 'company
-    (define-key company-active-map (kbd "<return>") nil)
-    (define-key company-active-map (kbd "RET") nil)
-    (define-key company-active-map (kbd "C-SPC") #'company-complete-selection))
-
-  (defun check-expansion ()
-    (save-excursion
-      (if (looking-at "\\_>") t
-        (backward-char 1)
-        (if (looking-at "\\.") t
-          (backward-char 1)
-          (if (looking-at "->") t nil)))))
-
-  (defun do-yas-expand ()
-    (let ((yas/fallback-behavior 'return-nil))
-      (yas/expand)))
-
-  (defun tab-indent-or-complete ()
-    (interactive)
-    (cond
-     ((minibufferp)
-      (minibuffer-complete))
-     (t
-      (indent-for-tab-command)
-      (if (or (not yas/minor-mode)
-              (null (do-yas-expand)))
-          (if (check-expansion)
-              (progn
-                (company-manual-begin)
-                (if (null company-candidates)
-                    (progn
-                      (company-abort)
-                      (indent-for-tab-command)))))))))
-
-  (defun tab-complete-or-next-field ()
-    (interactive)
-    (if (or (not yas/minor-mode)
-            (null (do-yas-expand)))
-        (if company-candidates
-            (company-complete-selection)
-          (if (check-expansion)
-              (progn
-                (company-manual-begin)
-                (if (null company-candidates)
-                    (progn
-                      (company-abort)
-                      (yas-next-field))))
-            (yas-next-field)))))
-
-  (defun expand-snippet-or-complete-selection ()
-    (interactive)
-    (if (or (not yas/minor-mode)
-            (null (do-yas-expand))
-            (company-abort))
-        (company-complete-selection)))
-
-  (defun abort-company-or-yas ()
-    (interactive)
-    (if (null company-candidates)
-        (yas-abort-snippet)
-      (company-abort)))
-
-  (global-set-key [tab] 'tab-indent-or-complete)
-  (global-set-key (kbd "TAB") 'tab-indent-or-complete)
-  (global-set-key [(control return)] 'company-complete-common)
-
-  (eval-after-load "company"
-    '(progn
-       (define-key company-active-map [tab] 'expand-snippet-or-complete-selection)
-       (define-key company-active-map (kbd "TAB") 'expand-snippet-or-complete-selection)))
-  
-  (eval-after-load "yasnippet"
-    '(progn
-       (define-key yas-minor-mode-map [tab] nil)
-       (define-key yas-minor-mode-map (kbd "TAB") nil)
-
-       (define-key yas-keymap [tab] 'tab-complete-or-next-field)
-       (define-key yas-keymap (kbd "TAB") 'tab-complete-or-next-field)
-       (define-key yas-keymap [(control tab)] 'yas-next-field)
-       (define-key yas-keymap (kbd "C-g") 'abort-company-or-yas))) 
-
-  ;;; Markdown
+   ;;; Markdown
   ;;;; live preview
   (spacemacs/set-leader-keys-for-major-mode 'emacs-markdown-mode "mp" 'markdown-live-preview-mode)
 
@@ -501,7 +427,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; JSX
   (use-package rjsx-mode
-    :mode (("*.js" . rjsx-mode))
+    :mode (("\\/.*\\.js\\'" . rjsx-mode))
     )
 
    ;; web-mode
@@ -529,7 +455,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (company-terraform-init)
 
   ;; Magit
-  (custom-set-faces  
+  (custom-set-faces
    '(magit-blame-highlight ((t (:foreground "#28998d" :background "#011d23"  :inherit t)))))
 
   ;; Autocomplete
@@ -555,7 +481,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   ;; Org-mode
   (with-eval-after-load 'org
-    
+
     (defun unauthorized-org-babel-languages (lang body)
       (not (member lang '("plantuml" "wsd"))))
 
@@ -567,18 +493,14 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (require 'org-bullets)
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-    (use-package org-sticky-header
-      :after org
-      :config
-      (setq org-sticky-header-full-path 'full)
-      (add-hook 'org-mode-hook 'org-sticky-header-mode))
+    ;; (use-package org-sticky-header
+    ;;   :after org
+    ;;   :config
+    ;;   (setq org-sticky-header-full-path 'full)
+    ;;   (add-hook 'org-mode-hook 'org-sticky-header-mode))
 
   ;;; Reveal.js
-    (use-package ox-reveal
-      :ensure ox-reveal)
-
-    (setq org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0")
-    (setq org-reveal-mathjax t)
+    (setq org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js@3.6.0")
 
   ;;; plantuml
     (setq org-plantuml-jar-path "/Users/bastian/plantuml.jar")
@@ -599,14 +521,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
             ("NEXT" . (:foreground "#0087ff" :background "#073642" :weight bold :slant italic :overline "#0087ff"))
             ("DONE" . (:foreground "#5f8700" :background "#073642" :weight bold :slant italic :overline "#5f8700"))
             ("HOLD" . (:foreground "#5f5faf" :background "#073642" :weight bold :slant italic :overline "#5f5faf"))
-
             ("CANCELED" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))
-
             ("SOMEDAY" . (:foreground "#0087ff" :background "#073642" :weight bold :slant italic :overline "#0087ff"))
             ("NOW" . (:foreground "#0087ff" :background "#073642" :weight bold :slant italic :overline "#0087ff"))
             ("KEEP" . (:foreground "#5f5faf" :background "#073642" :weight bold :slant italic :overline "#5f5faf"))
             ("DELETE" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))
             ("OVER" . (:foreground "grey" :background "#073642" :weight bold :slant italic :overline "grey"))
+            ;; conference notes
+            ("ALTERNATIVE" . (:foreground "#af005f" :background "#073642" :weight bold :slant italic :overline "#af005f"))
+            ("PICK" . (:foreground "#00afaf" :background "#073642" :weight bold :slant italic :overline "#00afaf"))
+            ("WATCH" . (:foreground "#5f5faf" :background "#073642" :weight bold :slant italic :overline "#5f5faf"))
             ))
 
   )
@@ -715,32 +639,40 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 
   ;; Autosave
-  (require 'real-auto-save)
-  (add-hook 'prog-mode-hook 'real-auto-save-mode)
-  (setq real-auto-save-interval 5) ;; in seconds
-  (setq auto-save-interval 20)
+  (use-package super-save
+    :ensure t
+    :config
+    (progn
+     (super-save-mode +1)
+     (setq super-save-auto-save-when-idle t)
+     (add-to-list 'super-save-triggers 'ace-window)
+     (add-to-list 'super-save-triggers 'focus-out-hook)
+     (add-to-list 'super-save-triggers 'switch-to-buffer)
+     (add-to-list 'super-save-triggers 'evil-insert-state-exit-hook)
+     )
+    )
 
-  ;;Solarized theme
+    ;;Solarized theme
   (setq powerline-default-separator 'slant)
-  (setq theming-modifications
-        '((solarized
-           ;;powerline
-           (mode-line :foreground "#002b36" :background "#1071c7" :inverse-video nil)
-           (powerline-inactive1 :background "#184854" :foreground "#00afaf" :inverse-video nil)
-           (powerline-inactive2 :background "#184854" :foreground "#00afaf" :inverse-video nil)
-           ;;promodoro
-           (org-pomodoro-mode-line :foreground "#5f8700" :weight bold :slant italic)
-           (org-pomodoro-mode-line-break :foreground "#af005f" :weight bold :slant italic)
-           ;; Make a really prominent helm selection line.
-           (helm-selection :foreground "#011d23" :background "#00afaf" :inverse-video nil)
-           ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.
-           (cursor :background "#b58900")
-         )))
+  ;; (setq theming-modifications
+  ;;       '((solarized
+  ;;          ;;powerline
+  ;;          (mode-line :foreground "#002b36" :background "#1071c7" :inverse-video nil)
+  ;;          (powerline-inactive1 :background "#184854" :foreground "#00afaf" :inverse-video nil)
+  ;;          (powerline-inactive2 :background "#184854" :foreground "#00afaf" :inverse-video nil)
+  ;;          ;;promodoro
+  ;;          (org-pomodoro-mode-line :foreground "#5f8700" :weight bold :slant italic)
+  ;;          (org-pomodoro-mode-line-break :foreground "#af005f" :weight bold :slant italic)
+  ;;          ;; Make a really prominent helm selection line.
+  ;;          (helm-selection :foreground "#011d23" :background "#00afaf" :inverse-video nil)
+  ;;          ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.
+  ;;          (cursor :background "#b58900")
+  ;;        )))
 
   ;; Now we can load the theme.
-  (set-terminal-parameter nil 'background-mode 'dark)
-  (set-frame-parameter nil 'background-mode 'dark)
-  (spacemacs/load-theme 'solarized)
+  ;; (set-terminal-parameter nil 'background-mode 'dark)
+  ;; (set-frame-parameter nil 'background-mode 'dark)
+  ;; (spacemacs/load-theme 'solarized)
 
   (cl-defun ap/org-set-level-faces (&key (first-parent 'outline-1))
   (require 'color)
@@ -787,3 +719,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."

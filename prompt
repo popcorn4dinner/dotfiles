@@ -9,7 +9,7 @@ POWERLEVEL9K_MODE="nerdfont-complete"
 # Separators
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR='\UE0B8'
 # POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=$'\ue231'
-POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\UE0BA'
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\ue0b2'
 # POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=$'\ue0b7'
 
 # Context
@@ -69,8 +69,18 @@ prompt_empty() {
     fi
 }
 
+prompt_kube_context() {
+    local ref
+    ref=$(command git symbolic-ref --quiet HEAD 2> /dev/null)
+    local ret=$?
+    if [[ $ret == 0 ]]; then
+        local context=$(kubectl config view -o=jsonpath='{.current-context}')
+        $1_prompt_segment "$0" "$2" "black" "cyan" "\ue22e $context" "#"
+    fi
+}
+
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status_joined context dir vcs empty)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(kube_context)
 
 # Status
 POWERLEVEL9K_STATUS_VERBOSE=false

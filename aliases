@@ -2,6 +2,9 @@
 
 alias dco="docker-compose"
 alias dce="docker-compose exec"
+alias k="kubectl"
+alias kx="kubectx"
+alias kn="kubens"
 
 # List all files colorized in long format
 alias ll='ls -lh'

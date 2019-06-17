@@ -36,6 +36,8 @@ apps=(
     jpeg
     jq
     kubernetes-cli
+    kubectx
+    kubernetes-helm
     librsvg
     libxml2
     libyaml
