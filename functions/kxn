@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+kubectx ${1:-"staging"} && kubens ${2:-"customer-team"}

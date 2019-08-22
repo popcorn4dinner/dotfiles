@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+if [ $# -eq 0 ]; then
+     echo "Usage: kube-attach <service name> [command]"
+     exit 1
+fi
+
+POD=$(kubectl get pod -l app=$1 -o jsonpath="{.items[0].metadata.name}") && \
+kubectl exec -it $POD --container $1 ${2:-"bash"}
