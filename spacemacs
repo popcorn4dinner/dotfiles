@@ -104,8 +104,10 @@ This function should only modify configuration layer settings."
                                       all-the-icons
                                       company-terraform
                                       drag-stuff
+                                      doom-modeline
                                       gnuplot
                                       helm-org-rifle
+                                      highlight-indentation
                                       multiple-cursors
                                       org-bullets
                                       org-cliplink
@@ -240,15 +242,19 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         solarized-dark
-                         spacemacs-dark
+                         doom-one
+                         doom-solarized-dark
+                         doom-nord
                          (darkplus :location (recipe :fetcher github
                                                      :repo "popcorn4dinner/darkplus-emacs"))
                          ;; (darkplus :location (recipe :fetcher github
                                                     ;; :repo "dunstontc/darkplus-emacs"))
+                         spacemacs-dark
+                         solarized-dark
                          tangotango
                          deeper-blue
                          afternoon
+                         misterioso
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -565,6 +571,13 @@ before packages are loaded."
   (spacemacs/set-leader-keys "wv" 'split-window-below-and-focus)
   (spacemacs/set-leader-keys "wV" 'split-window-below)
 
+  ;; Multiple Cursers
+  (require 'multiple-cursors)
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C->") 'mc/mark-all-like-this)
+
   ;;;; find usages
   (spacemacs/set-leader-keys "pu" 'helm-projectile-ag)
 
@@ -588,6 +601,7 @@ before packages are loaded."
 
   ;; Org-mode
   (with-eval-after-load 'org
+    (require 'org-tempo)
 
     (defun unauthorized-org-babel-languages (lang body)
       (not (member lang '("plantuml" "wsd"))))
@@ -763,6 +777,7 @@ before packages are loaded."
                                           :foreground (modify-color (nth level org-level-color-list))
                                           :height height
                                           :weight weight
+                                          :background nil
                                           :overline t)
                    collect face into faces
                    finally do (defconst org-level-faces faces)
@@ -783,10 +798,39 @@ before packages are loaded."
      )
     )
 
+  (require 'doom-modeline)
+  (doom-modeline-mode 1)
+  (setq doom-modeline-buffer-file-name-style 'buffer-name)
+
+  (setq js2-strict-missing-semi-warning nil)
+
+  (add-hook 'yaml-mode-hook
+            (lambda ()
+              'highlight-indentation-mode))
+ 
+ )
 
 
-
-  )
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("984f92f1d8b5fd695b8724023baf12506c2548a245433e9b0e00aad2f77d0976" default)))
+ '(package-selected-packages
+   (quote
+    (highlight-indent-guides yasnippet-snippets yapfify yaml-mode xterm-color wsd-mode ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tangotango-theme tagedit symon symbol-overlay swift-mode super-save string-inflection sql-indent spaceline-all-the-icons solarized-theme smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restclient-helm restart-emacs rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pytest pyenv-mode py-isort pug-mode projectile-rails prettier-js popwin play-crystal plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer osx-trash osx-dictionary osx-clipboard orgit org-super-agenda org-ref org-re-reveal org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file ob-restclient ob-http ob-elixir ob-crystal nodejs-repl nginx-mode neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc inf-crystal indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag groovy-mode groovy-imports gradle-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-mix flycheck-elm flycheck-crystal flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ensime enh-ruby-mode emojify emoji-cheat-sheet-plus emmet-mode elm-test-runner elm-mode elisp-slime-nav editorconfig dumb-jump drupal-mode drag-stuff dotenv-mode doom-modeline dockerfile-mode docker diminish diff-hl devdocs deft dart-mode darkplus-theme cython-mode company-web company-terraform company-tern company-statistics company-restclient company-php company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ameba alchemist ahk-mode aggressive-indent afternoon-theme ace-window ace-link ace-jump-helm-line ac-ispell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)
