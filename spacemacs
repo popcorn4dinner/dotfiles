@@ -243,12 +243,9 @@ It should only modify the values of Spacemacs settings."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          doom-one
-                         doom-solarized-dark
                          doom-nord
                          (darkplus :location (recipe :fetcher github
                                                      :repo "popcorn4dinner/darkplus-emacs"))
-                         ;; (darkplus :location (recipe :fetcher github
-                                                    ;; :repo "dunstontc/darkplus-emacs"))
                          spacemacs-dark
                          solarized-dark
                          tangotango
@@ -526,19 +523,19 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  )
-
-(defun dotspacemacs/user-load ()
-  "Library to load while dumping.
-This function is called only while dumping Spacemacs configuration. You can
-`require' or `load' the libraries of your choice that will be included in the
-dump."
   ;; Sanity savers
   (setq create-lockfiles nil)
   (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
   (setq auto-save-list-file-prefix temporary-file-directory)
   (add-hook 'before-save-hook 'delete-trailing-whitespace))
+
+(defun dotspacemacs/user-load ()
+  "Library to load while dumping.
+This function is called only while dumping Spacemacs configuration. You can
+`require' or `load' the libraries of your choice that will be included in the
+dump."
+  )
 
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
@@ -807,7 +804,7 @@ before packages are loaded."
   (add-hook 'yaml-mode-hook
             (lambda ()
               'highlight-indentation-mode))
- 
+
  )
 
 
