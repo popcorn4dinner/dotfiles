@@ -23,7 +23,10 @@ apps=(
     ctop
     crystal-lang
     diff-so-fancy
+    elixir-build
+    elixir
     elm
+    exbenv
     freetype
     httpie
     htop
@@ -83,4 +86,3 @@ brew cleanup
 
 # link emacs-mac to apps folder
 ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications
-

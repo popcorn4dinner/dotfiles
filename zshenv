@@ -33,8 +33,9 @@ export RUBY_CONFIGURE_OPTS="--disable-dtrace"
 
 export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 
+export PATH="$HOME/.exenv/bin:$PATH"
 # local overrides:
 
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 [[ -f ~/.zshrc.local ]] && source ~/.aliases.local
-[[ -d ~/.functions.local ]] && export PATH="$HOME/.functions.local:$PATH"gem install pg
+[[ -d ~/.functions.local ]] && export PATH="$HOME/.functions.local:$PATH"

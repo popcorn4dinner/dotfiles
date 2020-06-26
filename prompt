@@ -75,7 +75,11 @@ prompt_kube_context() {
     local ret=$?
     if [[ $ret == 0 ]]; then
         local context=$(kubectl config view -o=jsonpath='{.current-context}')
-        $1_prompt_segment "$0" "$2" "black" "cyan" "\ue22e $context" "#"
+        if [[ "$context" == "production" ]]; then
+           local context_bg_color='magenta'
+           local context_fg_color='black'
+        fi
+        $1_prompt_segment "$0" "$2" "${context_bg_color:-black}" "${context_fg_color:-cyan}" "\ue22e $context" "#"
     fi
 }
 
@@ -89,4 +93,3 @@ POWERLEVEL9K_STATUS_OK_FOREGROUND='cyan'
 POWERLEVEL9K_STATUS_ERROR_BACKGROUND='magenta'
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND='black'
 POWERLEVEL9K_STATUS_CROSS=true
-

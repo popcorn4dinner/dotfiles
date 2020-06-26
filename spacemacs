@@ -33,7 +33,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(csv
      autohotkey
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup t
@@ -49,7 +49,7 @@ This function should only modify configuration layer settings."
      elm
      emacs-lisp
      emoji
-     elixir
+     (elixir :variables elixir-backend 'alchemist)
      evil-commentary
      git
      html
@@ -104,7 +104,6 @@ This function should only modify configuration layer settings."
                                       all-the-icons
                                       company-terraform
                                       drag-stuff
-                                      doom-modeline
                                       gnuplot
                                       helm-org-rifle
                                       highlight-indentation
@@ -261,7 +260,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator slant :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(doom :separator slant :separator-scale 1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -543,6 +542,23 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (defun swap-buffer-content ()
+    "replaces the entire content of a buffer which the last item on killring"
+    (interactive)
+    (erase-buffer)
+    (spacemacs/evil-mc-paste-after))
+
+  (defun swap-line-content ()
+    "replaces the entire content pf a line which the last item on killring"
+    (interactive)
+    (delete-region (line-beginning-position) (line-end-position))
+    (spacemacs/evil-mc-paste-after))
+
+  (defun swap-selected-content ()
+     "replaces content ion selection with last item on killring"
+     (interactive)
+     (delete-region (region-beginning) (region-end))
+     (spacemacs/evil-mc-paste-after))
 
   ;; Key bindings
   ;;; General
@@ -551,6 +567,28 @@ before packages are loaded."
   (global-set-key (kbd "M-<left>")  'beginning-of-visual-line)
   (global-set-key (kbd "H-<right>") 'next-multiframe-window)
   (global-set-key (kbd "H-<left>") 'previous-multiframe-window)
+
+  ;; delete without register
+  (evil-define-operator evil-delete-without-register (beg end type yank-handler)
+    (interactive "<R><y>")
+    (evil-delete beg end type ?_ yank-handler))
+  (define-key evil-normal-state-map (kbd "d") 'evil-delete-without-register)
+  (define-key evil-visual-state-map (kbd "d") 'evil-delete-without-register)
+  (define-key evil-normal-state-map (kbd "D") 'evil-delete)
+  (define-key evil-visual-state-map (kbd "D") 'evil-delete)
+
+  ;; invert paste position
+  (define-key evil-normal-state-map (kbd "p") 'spacemacs/evil-mc-paste-before)
+  (define-key evil-visual-state-map (kbd "p") 'spacemacs/evil-mc-paste-before)
+  (define-key evil-normal-state-map (kbd "P") 'spacemacs/evil-mc-paste-after)
+  (define-key evil-visual-state-map (kbd "P") 'spacemacs/evil-mc-paste-after)
+
+  ;; swap text
+  (define-key evil-normal-state-map (kbd "e") t)
+  (define-key evil-normal-state-map (kbd "el") 'swap-line-content)
+  (define-key evil-normal-state-map (kbd "eb") 'swap-buffer-content)
+  (define-key evil-normal-state-map (kbd "es") 'swap-selected-content)
+
 
   ;; drag-stuff - dragging lines
   (drag-stuff-global-mode 1)
@@ -795,9 +833,9 @@ before packages are loaded."
      )
     )
 
-  (require 'doom-modeline)
-  (doom-modeline-mode 1)
-  (setq doom-modeline-buffer-file-name-style 'buffer-name)
+  ;; (require 'doom-modeline)
+  ;; (doom-modeline-mode 1)
+  ;; (setq doom-modeline-buffer-file-name-style 'buffer-name)
 
   (setq js2-strict-missing-semi-warning nil)
 
@@ -818,12 +856,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("984f92f1d8b5fd695b8724023baf12506c2548a245433e9b0e00aad2f77d0976" default)))
  '(package-selected-packages
    (quote
-    (highlight-indent-guides yasnippet-snippets yapfify yaml-mode xterm-color wsd-mode ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide tangotango-theme tagedit symon symbol-overlay swift-mode super-save string-inflection sql-indent spaceline-all-the-icons solarized-theme smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restclient-helm restart-emacs rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pytest pyenv-mode py-isort pug-mode projectile-rails prettier-js popwin play-crystal plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer osx-trash osx-dictionary osx-clipboard orgit org-super-agenda org-ref org-re-reveal org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file ob-restclient ob-http ob-elixir ob-crystal nodejs-repl nginx-mode neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc inf-crystal indent-guide importmagic impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag groovy-mode groovy-imports gradle-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-mix flycheck-elm flycheck-crystal flycheck-credo flx-ido fill-column-indicator feature-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help ensime enh-ruby-mode emojify emoji-cheat-sheet-plus emmet-mode elm-test-runner elm-mode elisp-slime-nav editorconfig dumb-jump drupal-mode drag-stuff dotenv-mode doom-modeline dockerfile-mode docker diminish diff-hl devdocs deft dart-mode darkplus-theme cython-mode company-web company-terraform company-tern company-statistics company-restclient company-php company-emoji company-emacs-eclim company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ameba alchemist ahk-mode aggressive-indent afternoon-theme ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (tern shrink-path csv-mode doom-modeline yasnippet-snippets yapfify yaml-mode xterm-color wsd-mode ws-butler writeroom-mode winum which-key web-mode web-beautify vterm volatile-highlights vmd-mode vi-tilde-fringe uuidgen use-package unfill toc-org tide terminal-here tangotango-theme tagedit symon symbol-overlay swift-mode super-save string-inflection sql-indent spaceline-all-the-icons solarized-theme smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode reveal-in-osx-finder restclient-helm restart-emacs rbenv rainbow-mode rainbow-identifiers rainbow-delimiters pytest pyenv-mode py-isort pug-mode projectile-rails prettier-js popwin play-crystal plantuml-mode pippel pipenv pip-requirements phpunit phpcbf php-extras php-auto-yasnippets persp-mode password-generator paradox overseer osx-trash osx-dictionary osx-clipboard orgit org-ref org-re-reveal org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file ob-restclient ob-http ob-elixir ob-crystal nodejs-repl nginx-mode neotree nameless mwim mvn multi-term move-text mmm-mode minitest meghanada maven-test-mode markdown-toc magit-svn magit-section magit-gitflow macrostep lsp-ui lsp-python-ms lsp-java lorem-ipsum livid-mode live-py-mode link-hint launchctl json-navigator js2-refactor js-doc inf-crystal indent-guide importmagic impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag groovy-mode groovy-imports gradle-mode google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ gh-md geben fuzzy font-lock+ flyspell-correct-helm flycheck-pos-tip flycheck-package flycheck-mix flycheck-elsa flycheck-elm flycheck-crystal flycheck-credo flx-ido flutter fill-column-indicator feature-mode fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help enh-ruby-mode emojify emoji-cheat-sheet-plus emmet-mode elm-test-runner elm-mode elisp-slime-nav editorconfig dumb-jump drupal-mode drag-stuff dotenv-mode doom-themes dockerfile-mode docker diminish devdocs deft dart-mode darkplus-theme cython-mode company-web company-terraform company-tern company-statistics company-restclient company-phpactor company-php company-lsp company-emoji company-anaconda column-enforce-mode color-identifiers-mode clean-aindent-mode chruby centered-cursor-mode bundler browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ameba alchemist ahk-mode aggressive-indent afternoon-theme ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

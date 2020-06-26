@@ -45,7 +45,7 @@ zstyle ':prezto:load' pmodule \
   'autosuggestions'\
   'ruby' \
   'node' \
-  'ssh' \
+  # 'ssh' \
   'docker' \
   'utility'
 #
@@ -164,14 +164,14 @@ zstyle ':prezto:module:prompt' theme 'powerlevel9k'
 # zstyle ':prezto:module:screen:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
-# zstyle ':prezto:module:screen:auto-start' remote 'yes'
+zstyle ':prezto:module:screen:auto-start' remote 'no'
 
 #
 # SSH
 #
 
 # Set the SSH identities to load into the agent.
-zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
+# zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
 
 #
 # Syntax Highlighting
