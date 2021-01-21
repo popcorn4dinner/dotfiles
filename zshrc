@@ -19,7 +19,7 @@ fi
 unsetopt correct_all
 unsetopt nomatch
 
-# KEY BINDINGS 
+# KEY BINDINGS
 zmodload zsh/terminfo
 
 zle -N history-substring-search-up
@@ -28,6 +28,9 @@ bindkey "$terminfo[kcuu1]" history-substring-search-up
 zle -N history-substring-search-down
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
-
 eval $(thefuck --alias)
 
+source $(brew --prefix autoenv)/activate.sh
+
+eval "$(nodenv init -)"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
