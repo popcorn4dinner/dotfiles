@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 if [ $# -eq 0 ]; then
-     echo "Usage: kube-attach <service name> [command]"
+     echo "Usage: kube-attach <service name> [container-suffix] [command]"
      exit 1
 fi
 
-POD=$(kubectl get pod -l app=$1 -o jsonpath="{.items[0].metadata.name}") && \
-kubectl exec -it $POD --container $1 ${2:-"bash"}
+
+POD=$(kubectl get pod -n customer-team -l app.kubernetes.io/name=$1 -o jsonpath="{.items[?(@.metadata.ownerReferences[0].kind=='ReplicaSet')].metadata.name}" | cut -d' ' -f1)
+
+if [ -z "$POD" ]
+then
+   POD=$(kubectl get pod -l app=$1 -o jsonpath="{.items[0].metadata.name}")
+fi
+
+CONTAINER=$(kubectl get pods $POD -o jsonpath='{.spec.containers[*].name}' | cut -d' ' -f1)
+
+kubectl exec -it $POD --container $CONTAINER ${2:-"bash"}
