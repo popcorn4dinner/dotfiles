@@ -8,12 +8,13 @@ source "$DOTFILES_PATH/zsh_plugins/warhol/warhol.plugin.zsh"
 source "$DOTFILES_PATH/zsh_plugins/zsh-iterm-touchbar/zsh-iterm-touchbar.plugin.zsh"
 
 #customize prompt
-source "$DOTFILES_PATH/prompt"
+# source "$DOTFILES_PATH/prompt"
+
 
 # Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+# if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+#     source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# fi
 
 # disable annoying autocorrections
 unsetopt correct_all
@@ -27,8 +28,6 @@ bindkey "$terminfo[kcuu1]" history-substring-search-up
 
 zle -N history-substring-search-down
 bindkey "$terminfo[kcud1]" history-substring-search-down
-
-eval $(thefuck --alias)
 
 source $(brew --prefix autoenv)/activate.sh
 
