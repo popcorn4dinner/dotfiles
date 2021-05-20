@@ -1,5 +1,6 @@
 declare -a Dotfiles=(
     'aliases'
+    'config'
     'functions'
     'jsbeautifyrc'
     'gitconfig'
