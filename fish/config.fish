@@ -26,3 +26,15 @@ export PATH="$HOME/.gem:$PATH"
 
 # custom scripts within dotfiles
 export PATH="$DOTFILES_PATH/functions:$PATH"
+
+if test -d ~/.functions.local
+  export PATH="$HOME/.functions.local:$PATH"
+end
+
+if test -e ~/.local.env
+  source $HOME/.local.env
+end
+
+ssh-add -K > /dev/null ^ /dev/null
+
+source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
