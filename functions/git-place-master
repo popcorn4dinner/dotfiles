@@ -3,10 +3,13 @@
 # navigate where you want your new mater to be and run
 MAIN_BRANCHES=(master main)
 
-for BRANCH in $MAIN_BRANCHES
+for BRANCH in "${MAIN_BRANCHES[@]}"
 do
-  if git rev-parse --verify $BRANCH > /dev/null; then
-    git branch -D ${1:-master} && git checkout -b ${1:-master}
+  if git rev-parse --verify --quiet "origin/$BRANCH" > /dev/null; then
+    if git rev-parse --verify --quiet "$BRANCH" > /dev/null; then
+      git branch -D $BRANCH
+    fi
+    git switch -c $BRANCH
     exit 0
   fi
 done
