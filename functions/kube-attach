@@ -5,7 +5,7 @@ if [ $# -eq 0 ]; then
 fi
 
 
-POD=$(kubectl get pod -l app.kubernetes.io/name=$1 -o jsonpath="{.items[?(@.metadata.ownerReferences[0].kind=='ReplicaSet')].metadata.name}" | cut -d' ' -f1)
+POD=$(kubectl get pod -l app.kubernetes.io/part-of=$1 -o jsonpath="{.items[?(@.metadata.ownerReferences[0].kind=='ReplicaSet')].metadata.name}" | cut -d' ' -f1)
 
 if [ -z "$POD" ]
 then

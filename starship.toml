@@ -69,3 +69,11 @@ disabled = true
 [character]
 success_symbol = "[❯](bold green)"
 
+[git_branch]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[nodejs]
+symbol = " "

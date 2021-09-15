@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
 # navigate where you want your new mater to be and run
+MAIN_BRANCHES=(master main)
 
-git branch -D master && git checkout -b master
+for BRANCH in $MAIN_BRANCHES
+do
+  if git rev-parse --verify $BRANCH > /dev/null; then
+    git branch -D ${1:-master} && git checkout -b ${1:-master}
+    exit 0
+  fi
+done

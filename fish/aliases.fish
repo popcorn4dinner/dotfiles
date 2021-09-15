@@ -15,6 +15,8 @@ if status --is-interactive
     alias kn kubens
     alias ka kube-attach
 
+    alias pp "pbpaste | base64 -d | pbcopy"
+
     alias rbbi "bundle install"
     alias rbbe "bundle exec"
 

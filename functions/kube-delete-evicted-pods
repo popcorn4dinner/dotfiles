@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-kubectl get pod --all-namespaces | grep Evicted | awk '{print $1}' | xargs kubectl delete pod
+kubectl get pod | grep Evicted | awk '{print $1}' | xargs kubectl delete pod
 
