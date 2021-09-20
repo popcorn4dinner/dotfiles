@@ -45,4 +45,5 @@ cmd [[
 
 cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
 
+require('install-packer')
 require('plugins')

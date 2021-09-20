@@ -122,7 +122,7 @@ return require('packer').startup(function()
     end
   }
 
-  use {kabouzeid/nvim-lspinstall'}
+  use {'kabouzeid/nvim-lspinstall'}
 
   -- Git
   use {
@@ -178,7 +178,7 @@ return require('packer').startup(function()
   -- Comments
   use {
     'terrortylor/nvim-comment',
-    config = function(){
+    config = function()
         require('nvim_comment').setup({
             -- Linters prefer comment and line to have a space in between markers
             marker_padding = true,
@@ -191,7 +191,7 @@ return require('packer').startup(function()
             -- Visual/Operator mapping left hand side
             operator_mapping = "<leader>c"
           })
-      }
+      end
   }
 
   -- Navigagtion
@@ -202,7 +202,7 @@ return require('packer').startup(function()
   -- Refactoring
   use {'tpope/vim-surround'}
   use {'simnaamburt/vim-mundo'}
-  use {'mg979/vim-visual-multi', {'banch': 'master'}}
+  use {'mg979/vim-visual-multi'}
   use {'glepnir/lspsaga.nvim'}
 
 end)
