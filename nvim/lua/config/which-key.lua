@@ -27,7 +27,7 @@ local files = {
   d = {
     name = "dotfiles",
     k = {":edit ~/.config/nvim/lua/config/which-key.lua<cr>", "key maps"},
-    v = {":edit ~/.config/nvim/init.vim<cr>", "vim"},
+    v = {":edit ~/.config/nvim/init.lua<cr>", "vim"},
     R = {":Restart<cr>", "reload neovim"}
   },
   D = {":call delete(expand('%')) | bw!<cr>", "delete"},
@@ -121,7 +121,18 @@ local search = {
 
 local text = {
   name = "text",
-  s = {":WhichKey z =<cr>", "spell suggestions"},
+  s = {
+    name = "spellchecking",
+    a = {"<Plug>(add-spelunker-good-nmap)<cr>", "add to good list"},
+    A = {":SpelunkerAddAll<cr>", "add all to good list"},
+    b = {"<Plug>(add-spell-bad-nmap)<cr>", "add to bad list"},
+    c = {"<Plug>(spelunker-correct-all)<cr>", "correct all"},
+    C = {"<Plug>(spelunker-correct-all-feeling-lucky)<cr>", "correct all (feeling lucky)"},
+    l = {"<Plug>(spelunker-correct-from-list)<cr>", "correct from list"},
+    L = {"<Plug>(spelunker-correct-all-from-list)<cr>", "correct all from list"},
+    t = {"<Plug>(spelunker-toggle-buffer)<cr>", "toggle buffer"},
+    T = {"<Plug>(spelunker-toggle)<cr>", "toggle"}
+  },
   w = {':call CleanWhiteSpaces()<cr>', "remove white spaces"}
 }
 

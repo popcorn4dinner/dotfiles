@@ -24,6 +24,9 @@ return require('packer').startup(function()
   -- Spellchecking
   use {
     'kamykn/spelunker.vim',
+    requires = {
+      {'kamykn/popup-menu.nvim'}
+    },
     config = function()
       require('config.spelunker')
     end
@@ -150,6 +153,7 @@ return require('packer').startup(function()
       require('config.endwise')
     end
   }
+
   use {
     'windwp/nvim-autopairs',
     config = function()
@@ -196,12 +200,12 @@ return require('packer').startup(function()
 
   -- Navigagtion
   use {'phaazon/hop.nvim'}
-  use {'brisbin/vim-mkdir'}
+  use {'pbrisbin/vim-mkdir'}
   use {'famiu/nvim-reload'}
 
   -- Refactoring
   use {'tpope/vim-surround'}
-  use {'simnaamburt/vim-mundo'}
+  use {'simnalamburt/vim-mundo'}
   use {'mg979/vim-visual-multi'}
   use {'glepnir/lspsaga.nvim'}
 

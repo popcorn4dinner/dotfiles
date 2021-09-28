@@ -21,10 +21,12 @@ if status --is-interactive
     alias rbbe "bundle exec"
 
     function mkcd
-        mkdir -p "$ARGV" && cd "$_"
+        mkdir -p "$argv"
+        and cd "$argv"
     end
 
     function ts
         tmux new -s (basename $PWD)
+        or tmux attach-session -t (basename $PWD)
     end
 end
