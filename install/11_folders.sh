@@ -1,7 +1,6 @@
 #! /bin/bash
 
 folders=(
-    org
     Documents
     Projects
 )

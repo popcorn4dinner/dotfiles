@@ -3,8 +3,8 @@ if status --is-interactive
     abbr --add --global la 'ls -la'
     abbr --add --global ld 'ld -l | grep "^d"'
 
-    abbr --add --global dce 'docker-compose exec'
-    abbr --add --global dco 'docker-compose'
+    abbr --add --global dce 'docker compose exec'
+    abbr --add --global dco 'docker compose'
 
     alias f freska
     alias g git

@@ -13,32 +13,30 @@ brew tap caskroom/fonts
 # Install packages
 
 apps=(
+    brave-browser
     cyberduck
+    discord
     docker
     firefox
     font-3270
+    font-cascadia-code
     font-fira-code
     font-menlo-for-powerline
     font-meslo-for-powerline
     font-meslo-nerd-font
+    font-source-code-pro
+    google-chrome
+    google-cloud-sdk
+    insomnia
+    kitty
     srware-iron
-    iterm2
-    hammerspoon
     kaleidoscope
-    java
-    macdown
-    meld
-    postman
     slack
-    spotify
-    sublime-text
     transmit
+    visual-studio-code
     vlc
 )
 
-brew cask install "${apps[@]}"
+brew install --cask "${apps[@]}"
 
-# Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
-brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize webpquicklook suspicious-package qlvideo
-
-brew cask cleanup
+brew cleanup

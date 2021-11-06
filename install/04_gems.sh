@@ -10,6 +10,7 @@ gems=(
     ruby_parser
     seeing_is_believing
     sinatra
+    solargraph
     spring
 )
 

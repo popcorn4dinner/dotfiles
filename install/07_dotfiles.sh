@@ -8,6 +8,7 @@ declare -a Dotfiles=(
     'gemrc'
     'spacemacs'
     'tigrc'
+    'tmux.conf'
     'zshenv'
     'zshrc'
     'zpreztorc'
@@ -39,4 +40,13 @@ for dotfile in "${Dotfiles[@]}";do
     ln -s $(pwd)/$dotfile ~/.$dotfile
 
 done
+
+echo "moving starship config"
+rm -rf ~/.config/starship.toml
+ln -s $(pwd)/starship.toml ~/.config/starship.toml
+
+echo "moving starship config"
+rm -rf ~/.config/kitty/kitty.conf
+ln -s $(pwd)/kitty.conf ~/.config/kitty/kitty.conf
+
 echo 'done'
