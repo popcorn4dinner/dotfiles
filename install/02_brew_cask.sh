@@ -28,7 +28,6 @@ apps=(
     google-cloud-sdk
     insomnia
     kitty
-    srware-iron
     kaleidoscope
     slack
     transmit
