@@ -1,6 +1,5 @@
 brew install fish
 mkdir -p ~/.config/fish
-ln -s $(pwd)/fish/config.fish ~/.config/fish/config.fish
 
 declare -a Dotfiles=(
     'aliases.fish'
@@ -12,7 +11,7 @@ for dotfile in "${Dotfiles[@]}";do
         if ! [ -L "$HOME/.config/fish/$dotfile" ]
         then
             echo "creating backup of $dotfile in .$dotfile.bak"
-            mv ~/.config/fish/$dotfile ~/.$dotfile.bak
+            mv ~/.config/fish/$dotfile ~/.config/fish/$dotfile.bak
         fi
     fi
 
@@ -23,7 +22,7 @@ for dotfile in "${Dotfiles[@]}";do
     fi
 
     echo "creating symblink for $dotfile"
-    ln -s $(pwd)/$dotfile ~/.config/fish/$dotfile
+    ln -s $(pwd)/fish/$dotfile ~/.config/fish/$dotfile
 
 done
 
