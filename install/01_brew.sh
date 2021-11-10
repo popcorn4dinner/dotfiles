@@ -18,6 +18,7 @@ apps=(
     ctop
     crystal
     diff-so-fancy
+    direnv
     elixir-build
     elixir
     elm
