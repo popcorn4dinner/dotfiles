@@ -1,4 +1,4 @@
-brew install fish fisher
+brew install fish
 mkdir -p ~/.config/fish
 ln -s $(pwd)/fish/config.fish ~/.config/fish/config.fish
 
@@ -26,5 +26,11 @@ for dotfile in "${Dotfiles[@]}";do
     ln -s $(pwd)/$dotfile ~/.config/fish/$dotfile
 
 done
+
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+fisher install jethrokuan/z
+
+sudo echo /usr/local/bin/fish >> /etc/shells
+chsh -s /usr/local/bin/fish
 echo 'done'
 
