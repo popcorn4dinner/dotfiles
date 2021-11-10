@@ -1,3 +1,5 @@
+eval (/opt/homebrew/bin/brew shellenv)
+
 status --is-interactive; and source (rbenv init -|psub)
 status --is-interactive; and source (nodenv init -|psub)
 
