@@ -6,9 +6,9 @@ else
 fi
 
 
-brew tap caskroom/versions
-brew tap caskroom/cask
-brew tap caskroom/fonts
+brew tap homebrew/cask
+brew tap homebrew/cask-versions
+brew tap homebrew/cask-fonts
 
 # Install packages
 

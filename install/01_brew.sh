@@ -29,7 +29,7 @@ apps=(
     git
     go
     graphviz
-    ispell --with-lang-en
+    ispell
     jpeg
     jq
     kubernetes-cli
