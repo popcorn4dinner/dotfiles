@@ -51,6 +51,8 @@ apps=(
     rbenv
     ruby-build
     sqlite
+    svn
+    starship
     terraform
     tig
     tmux
