@@ -1,4 +1,4 @@
-if ! [ -x "/usr/local/bin/brew" ]; then
+if ! [ -x "/opt/homebrew/bin/brew" ]; then
     echo "Installing homebrew"
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
@@ -21,7 +21,7 @@ apps=(
     elixir-build
     elixir
     elm
-    exbenv
+    exenv
     fish
     freetype
     httpie

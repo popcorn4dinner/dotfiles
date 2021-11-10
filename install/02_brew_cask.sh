@@ -1,4 +1,4 @@
-if ! [ -x "/usr/local/bin/brew" ]; then
+if ! [ -x "/opt/homebrew/bin/brew" ]; then
    echo "Homebrew not installed."
 
 else
