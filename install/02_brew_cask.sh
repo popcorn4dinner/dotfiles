@@ -22,8 +22,7 @@ apps=(
     font-cascadia-code
     font-fira-code
     font-menlo-for-powerline
-    font-meslo-for-powerline
-    font-meslo-nerd-font
+    font-meslo-lg-nerd-font
     font-source-code-pro
     google-chrome
     google-cloud-sdk
