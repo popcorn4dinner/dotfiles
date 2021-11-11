@@ -27,6 +27,7 @@ apps=(
     freetype
     httpie
     htop
+    gh
     git
     go
     graphviz

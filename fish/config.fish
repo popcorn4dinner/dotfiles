@@ -37,8 +37,8 @@ if test -e ~/.local.env
   source $HOME/.local.env
 end
 
-ssh-add -K > /dev/null ^ /dev/null
+ssh-add --apple-use-keychain > /dev/null
 
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
+source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
 
-export TERM=xterm
+export TERM=xterm-256color

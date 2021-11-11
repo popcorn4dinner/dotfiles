@@ -3,8 +3,6 @@
 # Activate z
 source "$(brew --prefix)/etc/profile.d/z.sh"
 
-source "$DOTFILES_PATH/zsh_plugins/warhol/warhol.plugin.zsh"
-
 # KEY BINDINGS
 zmodload zsh/terminfo
 

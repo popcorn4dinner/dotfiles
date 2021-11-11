@@ -1,6 +1,6 @@
 brew install fish
 mkdir -p ~/.config/fish
-
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 declare -a Dotfiles=(
     'aliases.fish'
     'config.fish'
