@@ -35,6 +35,6 @@ apps=(
     vlc
 )
 
-brew install "${apps[@]}"
+brew install --cask "${apps[@]}"
 
 brew cleanup

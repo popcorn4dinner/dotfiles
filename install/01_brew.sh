@@ -70,6 +70,3 @@ apps=(
 
 brew install "${apps[@]}"
 brew cleanup
-
-# link emacs-mac to apps folder
-ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications
