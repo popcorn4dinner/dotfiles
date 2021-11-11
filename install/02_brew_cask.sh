@@ -20,6 +20,8 @@ apps=(
     firefox
     font-3270
     font-cascadia-code
+    font-caskaydia-cove-nerd-font
+    font-ligature-symbols
     font-fira-code
     font-menlo-for-powerline
     font-meslo-lg-nerd-font
@@ -29,8 +31,10 @@ apps=(
     insomnia
     kitty
     kaleidoscope
+    mullvadvpn
     slack
     transmit
+    tuple
     visual-studio-code
     vlc
 )
