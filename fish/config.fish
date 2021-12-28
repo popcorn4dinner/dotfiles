@@ -29,6 +29,9 @@ export PATH="$HOME/.gem:$PATH"
 # custom scripts within dotfiles
 export PATH="$DOTFILES_PATH/functions:$PATH"
 
+#composer executables
+export PATH="$HOME/.composer/vendor/bin:$PATH"
+
 if test -d ~/.functions.local
   export PATH="$HOME/.functions.local:$PATH"
 end

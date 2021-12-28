@@ -9,6 +9,14 @@ return require('packer').startup(function()
     end
   }
   use {'tpope/vim-surround'}
+  use {'tpope/vim-abolish'}
+  use {
+    'AndrewRadev/splitjoin.vim',
+    config = function()
+      require('config.splitjoin')
+    end
+  }
+
 
   -- Treesitter
   use {
@@ -17,9 +25,6 @@ return require('packer').startup(function()
       require('config.treesitter')
     end
   }
-
-  -- Language Packs
-  use {'sheerun/vim-polyglot'}
 
   -- Spellchecking
   use {
@@ -148,16 +153,8 @@ return require('packer').startup(function()
 
   -- Auto-closing
   use {
-    'tpope/vim-endwise',
-    setup = function()
-      require('config.endwise')
-    end
-  }
-
-  use {
     'windwp/nvim-autopairs',
     config = function()
-      require('nvim-autopairs').setup()
       require('config.completion')
     end
   }
@@ -223,14 +220,31 @@ return require('packer').startup(function()
   }
 
   -- Navigagtion
-  use {'phaazon/hop.nvim'}
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v1', -- optional but strongly recommended
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require'hop'.setup {}
+    end
+  }
   use {'pbrisbin/vim-mkdir'}
   use {'famiu/nvim-reload'}
 
   -- Refactoring
-  use {'tpope/vim-surround'}
   use {'simnalamburt/vim-mundo'}
   use {'mg979/vim-visual-multi'}
   use {'glepnir/lspsaga.nvim'}
 
+  use {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 end)

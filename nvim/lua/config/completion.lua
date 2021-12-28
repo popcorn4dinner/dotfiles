@@ -37,25 +37,16 @@ _G.s_tab_complete = function()
   end
 end
 
-_G.snippet_force_expand = function()
-  if vim.fn.call('vsnip#expandable', {}) == 1 then
-    return t '<Plug>(vsnip-expand)'
-  else
-    return autopairs.esc('<s-cr>')
-  end
-end
+autopairs.setup{}
+autopairs.add_rules(require('nvim-autopairs.rules.endwise-elixir'))
+autopairs.add_rules(require('nvim-autopairs.rules.endwise-lua'))
+autopairs.add_rules(require('nvim-autopairs.rules.endwise-ruby'))
 
-_G.completion_confirm = function()
-  if vim.fn.pumvisible() ~= 0  then
-    if vim.fn.complete_info()['selected'] ~= -1 then
-      return vim.fn['compe#confirm'](autopairs.esc('<cr>'))
-    else
-      return autopairs.esc('<cr>')
-    end
-  else
-    return autopairs.autopairs_cr() .. autopairs.esc('<Plug>DiscretionaryEnd')
-  end
-end
+require("nvim-autopairs.completion.compe").setup({
+  map_cr = true,
+  map_complete = true,
+  auto_select = false
+})
 
 map('i', '<C-Space>', 'compe#complete()', { expr = true })
 map('i', '<C-e>', [[compe#close('<C-e>')]], { expr = true })
@@ -63,5 +54,4 @@ map('i', '<Tab>', 'v:lua.tab_complete()', { expr = true })
 map('s', '<Tab>', 'v:lua.tab_complete()', { expr = true })
 map('i', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
 map('s', '<S-Tab>', 'v:lua.s_tab_complete()', { expr = true })
-map('i', '<CR>','v:lua.completion_confirm()', { expr = true, noremap = false })
-map('i', '<S-CR>', 'v:lua.snippet_force_expand()', { expr = true })
+

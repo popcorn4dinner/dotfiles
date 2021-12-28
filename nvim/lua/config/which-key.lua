@@ -27,6 +27,7 @@ local files = {
   d = {
     name = "dotfiles",
     k = {":edit ~/.config/nvim/lua/config/which-key.lua<cr>", "key maps"},
+    p = {":edit ~/.config/nvim/lua/plugins.lua<cr>", "plugins"},
     v = {":edit ~/.config/nvim/init.lua<cr>", "vim"},
     R = {":Restart<cr>", "reload neovim"}
   },
@@ -69,25 +70,33 @@ local help = {
 
 local jump = {
   name = "jump",
-  c = {":HopChar2<cr>", "jump to characters"},
-  C = {":HopChar1<cr>", "jump to character"},
-  j = {":HopWord<cr>", "jump to word"},
+  c = {":HopChar1<cr>", "jump to characters"},
+  C = {":HopChar2<cr>", "jump to character"},
+  j = {":HopChar1<cr>", "jump to word"},
   l = {":HopLine<cr>", "jump to line"},
   w = {":HopWord<cr>", "jump to word"},
 }
 
 local lsp = {
   name = "language/lsp",
-  a = {
-    name = "actions",
-    a = {"<cmd>Telescope lsp_code_actions theme=get_dropdown<cr>", "actions"},
-    r = {"<cmd>Telescope lsp_range_code_actions theme=get_dropdown<cr>", "range actions"},
+  a = {"<cmd>Telescope lsp_code_actions theme=get_dropdown<cr>", "actions"},
+  c = {
+    name = "change case",
+    c = {"<Plug>(abolish-coerce)c<cr>", "camel case", noremap = false},
+    d = {"<Plug>(abolish-coerce)-", "dash case", noremap = false},
+    D = {"<Plug>(abolish-coerce).", "dot case", noremap = false},
+    m = {"<Plug>(abolish-coerce)m", "mixed case", noremap = false},
+    s = {"<Plug>(abolish-coerce)s", "snake case", noremap = false},
+    t = {"<Plug>(abolish-coerce)t", "title case", noremap = false},
+    u = {"<Plug>(abolish-coerce)u", "upper case", noremap = false}
   },
   d = {
     name = "definitions",
     j = {"<cmd>Telescope lsp_definitions theme=get_dropdown<cr>", "jump"},
     p = {":Lspsaga preview_definition<cr>", "preview"},
   },
+  e = {":SplitjoinSplit<cr>", "expand code segment"},
+  E = {":SplitjoinJoin<cr>", "collapse code segment"},
   f = {":lua vim.lsp.buf.formatting()<cr>", "format"},
   l = {"<cmd>Telescope treesitter theme=get_dropdown<cr>", "search ast"},
   s = {
@@ -97,13 +106,15 @@ local lsp = {
     w = {"<cmd>Telescope lsp_workspace_symbols theme=get_dropdown<cr>", "workspace symbols"}
   },
   r = {"<cmd>Telescope lsp_references theme=get_dropdown<cr>", "find references"},
-  R = {":Lspsaga rename<cr>", "rename"}
+  R = {":Lspsaga rename<cr>", "rename"},
+  q = {"<cmd>Telescope quickfix theme=get_dropdown<cr>", "quickfix"},
 }
 
 local project = {
   name = "project",
   f = {"<cmd>Telescope find_files theme=get_dropdown hidden=true<cr>", "files"},
   s = {"<cmd>Telescope live_grep theme=get_dropdown hidden=true<cr>", "search"},
+  t = {":TodoTrouble <cr>", "todos"},
   R = {":lua require('spectre').open_visual()<cr>", "rename"}
 }
 
@@ -213,3 +224,17 @@ local visual_mappings = {
 
 wk.register(visual_mappings, { prefix = "<leader>", mode = "v"})
 
+-- other mappings
+
+local map = vim.api.nvim_set_keymap
+
+map('n', '<Leader>w', ':write<CR>', {noremap = true})
+map('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+map('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+map('o', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
+map('o', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
+map('', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+map('', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
+
+map('v', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+map('v', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})

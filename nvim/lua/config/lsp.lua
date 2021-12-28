@@ -60,8 +60,11 @@ lspconfig.util.default_config = vim.tbl_extend(
 )
 
 lspconfig.elixirls.setup{
-  cmd = { "/Users/bastian/.config/elixir-ls/language_server.sh" }
+  cmd = { "/Users/bastian/.config/elixir-ls/release/language_server.sh" }
 }
+
+lspconfig.psalm.setup{}
+lspconfig.phpactor.setup{}
 
 lspconfig.solargraph.setup{
   settings = {
