@@ -2,6 +2,7 @@ local buffers = {
   name = "buffers",
   b = { "<cmd>Telescope buffers theme=get_dropdown<cr>", "buffers"},
   d = { ":bw!<cr>", "delete" },
+  e = { ":TroubleToggle document_diagnostics", "errors/warnings"}
   h = { ":Startify<cr>", "home"},
   n = { ":bn<cr>", "next" },
   p = { ":bp<cr>", "previous"},
@@ -32,7 +33,7 @@ local files = {
     R = {":Restart<cr>", "reload neovim"}
   },
   D = {":call delete(expand('%')) | bw!<cr>", "delete"},
-  f = { function() require('telescope.builtin').file_browser(require('telescope.themes').get_dropdown({hidden=true, cwd = vim.fn.expand('%:p:h')})) end, "find files"},
+  f = {"<cmd>Telescope file_browser theme=get_dropdown path=%:p:h<cr>", "browse files"},
   r = {"<cmd>Telescope oldfiles theme=get_dropdown<cr>", "recently opened"},
   R = {":call RenameFile()<cr>", "rename"},
   s = {":w<cr>", "save"},

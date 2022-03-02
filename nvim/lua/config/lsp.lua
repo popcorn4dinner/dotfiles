@@ -76,7 +76,9 @@ lspconfig.solargraph.setup{
 
 lspconfig.tsserver.setup{}
 
-lspconfig.gopls.setup{}
+lspconfig.gopls.setup{
+   cmd = {  "/Users/bastian/go/bin/gopls" }
+}
 
 lspconfig.yamlls.setup{
   settings = {

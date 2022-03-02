@@ -91,7 +91,8 @@ return require('packer').startup(function()
     requires = {
       {'nvim-lua/popup.nvim'},
       {'nvim-lua/plenary.nvim'},
-      {'kyazdani42/nvim-web-devicons'}
+      {'kyazdani42/nvim-web-devicons'},
+      { "nvim-telescope/telescope-file-browser.nvim" }
     }
   }
 
