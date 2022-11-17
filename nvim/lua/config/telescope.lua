@@ -7,6 +7,11 @@ require('telescope').setup{
         ".git/.*",
         ".DS_Store"
     }
+  },
+  pickers = {
+    find_files = {
+      hidden = true
+    }
   }
 }
 

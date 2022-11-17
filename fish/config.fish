@@ -4,6 +4,7 @@ status --is-interactive; and source (rbenv init -|psub)
 status --is-interactive; and source (nodenv init -|psub)
 
 direnv hook fish | source
+set -g direnv_fish_mode eval_on_arrow
 
 starship init fish | source
 

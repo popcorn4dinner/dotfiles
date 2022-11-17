@@ -9,6 +9,7 @@ if status --is-interactive
     alias f freska
     alias g git
     alias t tmux
+    alias d docker
 
     alias k kubectl
     alias kx kubectx

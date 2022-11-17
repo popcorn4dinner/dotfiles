@@ -37,3 +37,5 @@
   tool = meld
 [mergetool]
   prompt = false
+[init]
+	defaultBranch = main

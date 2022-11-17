@@ -2,7 +2,7 @@ local buffers = {
   name = "buffers",
   b = { "<cmd>Telescope buffers theme=get_dropdown<cr>", "buffers"},
   d = { ":bw!<cr>", "delete" },
-  e = { ":TroubleToggle document_diagnostics", "errors/warnings"}
+  e = { ":TroubleToggle document_diagnostics", "errors/warnings"},
   h = { ":Startify<cr>", "home"},
   n = { ":bn<cr>", "next" },
   p = { ":bp<cr>", "previous"},
