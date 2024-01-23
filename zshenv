@@ -43,6 +43,8 @@ export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
 
 export PATH="$HOME/.exenv/bin:$PATH"
 
+export OPENAI_API_KEY="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"
+
 # local overrides:
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 [[ -f ~/.zshrc.local ]] && source ~/.aliases.local

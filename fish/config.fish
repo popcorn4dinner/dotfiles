@@ -34,14 +34,14 @@ export PATH="$DOTFILES_PATH/functions:$PATH"
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 if test -d ~/.functions.local
-  export PATH="$HOME/.functions.local:$PATH"
+    export PATH="$HOME/.functions.local:$PATH"
 end
 
 if test -e ~/.local.env
-  source $HOME/.local.env
+    source $HOME/.local.env
 end
 
-ssh-add --apple-use-keychain > /dev/null
+ssh-add --apple-use-keychain >/dev/null
 
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
 
