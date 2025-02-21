@@ -1,0 +1,31 @@
+return {}
+-- local lspconfig = require('lspconfig')
+--
+-- return {
+--   "neovim/nvim-lspconfig",
+--   opts = {
+--     -- make sure mason installs the server
+--     servers = {
+--
+--       vtsls = {
+--         root_dir = lspconfig.util.root_pattern("package.json"),
+--       },
+--       denols = {
+--         root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+--         init_options = {
+--           lint = true,
+--           unstable = true,
+--           suggest = {
+--             imports = {
+--               hosts = {
+--                 ["https://deno.land"] = true,
+--                 ["https://cdn.nest.land"] = true,
+--                 ["https://crux.land"] = true,
+--               },
+--             },
+--           },
+--         },
+--       },
+--     },
+--   },
+-- }

@@ -1,3 +1,7 @@
+# Direnv stuff
+.direnv
+.envrc
+
 ### SublimeText ###
 *.sublime-workspace
 *.sublime-project

@@ -46,3 +46,5 @@ ssh-add --apple-use-keychain >/dev/null
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
 
 export TERM=xterm-256color
+
+fish_add_path /opt/homebrew/opt/openjdk/bin
