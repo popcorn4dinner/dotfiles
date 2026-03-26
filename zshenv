@@ -45,7 +45,9 @@ export PATH="$HOME/.exenv/bin:$PATH"
 
 export OPENAI_API_KEY="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"
 
+export PATH=$PATH:/Users/bastian/.qover/cli/bin
 # local overrides:
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
 [[ -f ~/.zshrc.local ]] && source ~/.aliases.local
 [[ -d ~/.functions.local ]] && export PATH="$HOME/.functions.local:$PATH"
+

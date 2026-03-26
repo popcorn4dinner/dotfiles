@@ -48,3 +48,16 @@ source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fis
 export TERM=xterm-256color
 
 fish_add_path /opt/homebrew/opt/openjdk/bin
+
+# pnpm
+set -gx PNPM_HOME /Users/bastian/Library/pnpm
+if not string match -q -- $PNPM_HOME $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
+#
+
+export PATH="/Users/bastian/.qover/cli/bin:$PATH"
+export QOVER_WORKSPACE_ROOT="/Users/bastian/code/qover_root/"
+
+export BRAINBIRDS_STRAPI_API_TOKEN="98638b8208a35a173877e145691e6030ea259089a5a4dff610a010f0d1ad81a1fc3dff7f0743483f920a34f956b0ea9ccddb5cf8c6db4ae2d43c2a46b14904046188bc64acd6b7890db8f39ef36421bc8ec7ba46cf617efe66f244264903fd1b013b135c638247bc2fc328b072f1c469fc03fd2ff6c5dbec74e59a8b2f270d7c"

@@ -1,7 +1,6 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 local Util = require("lazyvim.util")
-local telescope = require("telescope.builtin")
 
 vim.keymap.del("n", "<leader>e")
 vim.keymap.del("n", "<leader>/")
